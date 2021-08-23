@@ -28,19 +28,26 @@ this is equal to, for any domain `C_n` in total n domains in curricula `C` -
 # from node_utils import node_divergence
 import statistics
 import numpy as np
-from utils import domain_distance, Dataset, DatasetDetails,get_template,AVAILABLE_TEMPLATES
+from utils import (
+    domain_distance,
+    Dataset,
+    DatasetDetails,
+    get_template,
+    AVAILABLE_TEMPLATES,
+)
 from collections import defaultdict
 from dataclasses import dataclass, field, asdict
-from typing import Dict, List,Union
-import os 
+from typing import Dict, List, Union
+import os
 import seaborn as sns
 import itertools
 import json
 import pandas as pd
 
+
 @dataclass(frozen=True)
 class ExperimentIndices:
-    GD: Dict[str, Dict[str,float]] 
+    GD: Dict[str, Dict[str, float]]
     PC: Dict[str, float]
     PTheta: Dict[str, float]
     TaskDomains: List[str] = field(default_factory=list)
@@ -48,6 +55,7 @@ class ExperimentIndices:
     P: float = 0.0
     E: float = 0.0
     GIndex: float = 0.0
+
 
 class Benchmark:
     def __init__(self, experiment):
@@ -74,21 +82,23 @@ class Benchmark:
     def get_curricula_domains(self) -> Dict:
         """
         This takes in a list of templates in the training array and returns
-        a set of curriculum domains. In initial versions this is just a list of all templates, with 
+        a set of curriculum domains. In initial versions this is just a list of all templates, with
         number of samples per template.
         """
         return self.experiment["train_set"]["data"]
 
-    def probability_of_curricula(self, curriculum: str, curricula_domains: Dict) -> float:
+    def probability_of_curricula(
+        self, curriculum: str, curricula_domains: Dict
+    ) -> float:
         """
-        What is the probability of the given curriculum domain occurring in 
+        What is the probability of the given curriculum domain occurring in
         the complete curricula. Initially, this is just (number_of_samples_of_templateN/total_no_of_samples)
         """
         total = 0
 
         for curriculum_item in curricula_domains:
             total += curriculum_item["num_samples"]
-        probability = curriculum["num_samples"]/total
+        probability = curriculum["num_samples"] / total
         return probability
 
     def get_task_domains(self) -> Dict:
@@ -117,26 +127,29 @@ class Benchmark:
             E = self.get_experience()
             # curriculum_items.append(GD*(PC))
 
-            curriculum_items.append(GD*(PC/(P+E)))
+            curriculum_items.append(GD * (PC / (P + E)))
 
         contribution = performance_theta * sum(curriculum_items)
 
         return contribution
 
-    def get_priors(self)-> float:
+    def get_priors(self) -> float:
         """
         `priors (P)` : data which is built into the system _before_ training (are you fine-tuning something already fine-tuned?). This is negligible (~0) for most of current models.
         """
         return 0.0001
-    
-    def get_task_compute(self) ->float:
+
+    def get_task_compute(self) -> float:
         """
         compute exposure to a curricula
         """
-        
-        return self.experiment["train_cost"]["compute"] + self.experiment["test_cost"]["compute"]
 
-    def get_experience(self) ->float:
+        return (
+            self.experiment["train_cost"]["compute"]
+            + self.experiment["test_cost"]["compute"]
+        )
+
+    def get_experience(self) -> float:
         """
         `experience (E)` : exposure of the `IS` to `Curricula` (tentative : compute * curricula?)
         """
@@ -144,10 +157,10 @@ class Benchmark:
         training_compute = self.get_task_compute()
         return np.log(training_compute)
 
-    def get_domain_details(self, domain: Dict ) -> Dict:
+    def get_domain_details(self, domain: Dict) -> Dict:
         """
         In this case, this returns the template details for a given template.
-        Output : 
+        Output :
         {
                 "dag_length" : {
                      "inflated": 937.0,
@@ -162,18 +175,18 @@ class Benchmark:
             template_details = tmp.to_details().dict()
             # print(template_details)
             extracted_details = {
-                'dag_length' : template_details.get("dag_length"),
-                'prompt_length' : template_details.get("prompt_length"),
+                "dag_length": template_details.get("dag_length"),
+                "prompt_length": template_details.get("prompt_length"),
             }
-           
+
             return extracted_details
-        else :
+        else:
             return {
-                "dag_length" : {
-                     "inflated": 0,
-                     "deflated": 0,
+                "dag_length": {
+                    "inflated": 0,
+                    "deflated": 0,
                 },
-                "prompt_length": 0
+                "prompt_length": 0,
             }
 
     def get_performance_theta(self, task: Dict) -> float:
@@ -182,16 +195,19 @@ class Benchmark:
         """
         performance_per_template = self.experiment["performance"]["templates"]
         selected_task = next(
-            (x for x in performance_per_template if x["name"] == task["name"]), None)
+            (x for x in performance_per_template if x["name"] == task["name"]), None
+        )
         # sprint("selected task:", selected_task)
         domain_details = self.get_domain_details(selected_task)
         # more the divergence, lesser the performance
         performance = 1 - selected_task["divergence"]
         # performance_theta = (1 - DS) * deflated_length
         # return performance
-        return performance * domain_details['dag_length']["deflated"]
+        return performance * domain_details["dag_length"]["deflated"]
 
-    def get_generalization_difficulty(self, task_domain: Dict, curriculum_domain: Dict) -> float:
+    def get_generalization_difficulty(
+        self, task_domain: Dict, curriculum_domain: Dict
+    ) -> float:
         """
         returns the exponential generalization difficulty
         (domain_distance_score * 10)^e
@@ -199,21 +215,29 @@ class Benchmark:
         score = self.domain_distance_score(task_domain, curriculum_domain)
         return (score * 10) ** 2.71828
 
-    def domain_distance_score(self, task_domain: Dict , curriculum_domain: Dict) -> Dict:
+    def domain_distance_score(self, task_domain: Dict, curriculum_domain: Dict) -> Dict:
         """
         This calculates the domain distance scores, or generalization difficulty between
         a task and the curricula.
         """
         # return random.uniform(0, 1)
         total_samples = 2
-        task_dataset_details = DatasetDetails(total=total_samples, data=[{"name": task_domain["name"], "num_samples":total_samples}])
-        curriculum_dataset_details = DatasetDetails(total=total_samples, data=[{"name": curriculum_domain["name"], "num_samples":total_samples}])
-        domain_distance_score = domain_distance(Dataset.from_details(
-            task_dataset_details), Dataset.from_details(curriculum_dataset_details))
+        task_dataset_details = DatasetDetails(
+            total=total_samples,
+            data=[{"name": task_domain["name"], "num_samples": total_samples}],
+        )
+        curriculum_dataset_details = DatasetDetails(
+            total=total_samples,
+            data=[{"name": curriculum_domain["name"], "num_samples": total_samples}],
+        )
+        domain_distance_score = domain_distance(
+            Dataset.from_details(task_dataset_details),
+            Dataset.from_details(curriculum_dataset_details),
+        )
         # print(domain_distance_score)
         return domain_distance_score
 
-    def _drop_duplicate_tuples(self,l):
+    def _drop_duplicate_tuples(self, l):
         """
         Drop the tuples (b,a) if (a,b) exists already
         """
@@ -223,44 +247,79 @@ class Benchmark:
                 uniq.append(i)
         return uniq
 
-    def GetExperimentIndices(self,return_dict: bool =False) -> Union[ExperimentIndices,Dict]:
+    def GetExperimentIndices(
+        self, return_dict: bool = False
+    ) -> Union[ExperimentIndices, Dict]:
         TaskDomains = self.get_task_domains()
         CurriculaDomains = self.get_curricula_domains()
-        GD = { task.get('name'): {curricula.get('name'): self.get_generalization_difficulty(task,curricula) for curricula in CurriculaDomains} for task in TaskDomains }
-        PC = { curricula.get('name'):self.probability_of_curricula(curricula,CurriculaDomains) for curricula in CurriculaDomains }
+        GD = {
+            task.get("name"): {
+                curricula.get("name"): self.get_generalization_difficulty(
+                    task, curricula
+                )
+                for curricula in CurriculaDomains
+            }
+            for task in TaskDomains
+        }
+        PC = {
+            curricula.get("name"): self.probability_of_curricula(
+                curricula, CurriculaDomains
+            )
+            for curricula in CurriculaDomains
+        }
         P = self.get_priors()
         E = self.get_experience()
-        Ptheta = { task.get('name'):self.get_performance_theta(task) for task in TaskDomains }
+        Ptheta = {
+            task.get("name"): self.get_performance_theta(task) for task in TaskDomains
+        }
 
-        #Finding out Contribution for every task
+        # Finding out Contribution for every task
         TaskContributions = defaultdict()
         for task in TaskDomains:
-            TaskContributions[task.get('name')] = Ptheta.get(task.get('name')) * sum( [ GD.get(task.get('name')).get(curricula.get('name')) * (PC.get(curricula.get('name'))/ (P+E)) for curricula in CurriculaDomains])
-
+            TaskContributions[task.get("name")] = Ptheta.get(task.get("name")) * sum(
+                [
+                    GD.get(task.get("name")).get(curricula.get("name"))
+                    * (PC.get(curricula.get("name")) / (P + E))
+                    for curricula in CurriculaDomains
+                ]
+            )
 
         TaskContributions = dict(TaskContributions)
-        GIndex = round(sum(list(TaskContributions.values())),3)
-        exp_indices = ExperimentIndices(GD=GD,PC=PC,PTheta=Ptheta,TaskDomains=TaskDomains,
-                            CurriculaDomains=CurriculaDomains,
-                            P=P,E=E,GIndex=GIndex)
+        GIndex = round(sum(list(TaskContributions.values())), 3)
+        exp_indices = ExperimentIndices(
+            GD=GD,
+            PC=PC,
+            PTheta=Ptheta,
+            TaskDomains=TaskDomains,
+            CurriculaDomains=CurriculaDomains,
+            P=P,
+            E=E,
+            GIndex=GIndex,
+        )
         if return_dict:
             return asdict(exp_indices)
         return exp_indices
 
-
     def generate_confusion_matrix(self):
-        template_pair_half_grid = self._drop_duplicate_tuples(list(itertools.product(AVAILABLE_TEMPLATES,AVAILABLE_TEMPLATES)))
-        tp_dict = {f: json.load(open(os.path.join(os.getcwd(),'templates',f)))['flow'] for f in AVAILABLE_TEMPLATES }
-        df = pd.DataFrame(columns=AVAILABLE_TEMPLATES,index=AVAILABLE_TEMPLATES)
-        
+        template_pair_half_grid = self._drop_duplicate_tuples(
+            list(itertools.product(AVAILABLE_TEMPLATES, AVAILABLE_TEMPLATES))
+        )
+        tp_dict = {
+            f: json.load(open(os.path.join(os.getcwd(), "templates", f)))["flow"]
+            for f in AVAILABLE_TEMPLATES
+        }
+        df = pd.DataFrame(columns=AVAILABLE_TEMPLATES, index=AVAILABLE_TEMPLATES)
+
         for ent in template_pair_half_grid:
-            tp0,tp1 = ent[0], ent[1]
+            tp0, tp1 = ent[0], ent[1]
             if df[tp1][tp0] != -1:
                 df[tp0][tp1] = df[tp1][tp0]
             else:
-                df[tp0][tp1] = node_divergence(tp_dict.get(tp0,[]),tp_dict.get(tp1,[]))
+                df[tp0][tp1] = node_divergence(
+                    tp_dict.get(tp0, []), tp_dict.get(tp1, [])
+                )
 
             if df[tp1][tp0] == -1.0 and df[tp0][tp1] != -1.0:
                 df[tp1][tp0] = df[tp0][tp1]
 
-        sns.heatmap(df,vmin=0.0,vmax=1.0,annot=True)
+        sns.heatmap(df, vmin=0.0, vmax=1.0, annot=True)

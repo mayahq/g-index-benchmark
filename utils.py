@@ -6,15 +6,17 @@ from datetime import datetime
 from typing import Union, List, Dict
 from pydantic import BaseModel, Field, validator
 from pydantic.dataclasses import dataclass
-# from node_utils import node_divergence
+
+from node_utils import node_divergence
 import glob
 
-files = glob.glob(os.path.join(os.getcwd(),'templates',"*.json"))
+files = glob.glob(os.path.join(os.getcwd(), "templates", "*.json"))
 AVAILABLE_TEMPLATES = [os.path.basename(fname) for fname in files]
 
 
-def get_template(template_key: str,template_dir:str = 'templates') -> Dict:
-    return json.load(open(os.path.join(template_dir,template_key)))
+def get_template(template_key: str, template_dir: str = "templates") -> Dict:
+    return json.load(open(os.path.join(template_dir, template_key)))
+
 
 @dataclass
 class TemplateInfo:
@@ -26,6 +28,7 @@ class TemplateInfo:
         if v < 0:
             raise ValueError(f"num_samples {v} < 0 !!")
         return v
+
 
 @dataclass
 class DatasetDetails:
@@ -82,6 +85,7 @@ class Dataset(BaseModel):
         for k, v in self.data.items():
             for tmp in v:
                 yield tmp
+
 
 def domain_distance(train_set: Dataset, test_set: Dataset) -> float:
     ovr_values = []
