@@ -6,15 +6,22 @@ from datetime import datetime
 from typing import Union, List, Dict
 from pydantic import BaseModel, Field, validator
 from pydantic.dataclasses import dataclass
-# from node_utils import node_divergence
+from node_utils import node_divergence
 import glob
 
-files = glob.glob(os.path.join(os.getcwd(),'templates',"*.json"))
-AVAILABLE_TEMPLATES = [os.path.basename(fname) for fname in files]
+files = glob.glob(os.path.join(os.getcwd(),"templates","*.json"))
+AVAILABLE_TEMPLATES = [os.path.basename(fname).split(".")[0] for fname in files]
 
+try:
+    with open('lengths.json','r') as f:
+        TEMPLATE_DETAILS  = json.load(f)
+except FileNotFoundError:
+    print("No `lengths.json` was found, Using zero values for lengths, Please note that you would not be able to get reproduce results without it.")
+    TEMPLATE_DETAILS = {temp_name: {"inflated":0,"deflated":0} for temp_name in AVAILABLE_TEMPLATES}
 
-def get_template(template_key: str,template_dir:str = 'templates') -> Dict:
-    return json.load(open(os.path.join(template_dir,template_key)))
+def get_template(template_key: str,template_dir:str = "templates") -> Dict:
+    return json.load(open(os.path.join(template_dir,template_key + ".json")))
+
 
 @dataclass
 class TemplateInfo:
@@ -92,6 +99,6 @@ def domain_distance(train_set: Dataset, test_set: Dataset) -> float:
             scores.append(score)
             if score == 0:
                 break
-        ovr_values.append(np.min(scores))
+        ovr_values.append(np.mean(scores))
 
     return np.mean(ovr_values)

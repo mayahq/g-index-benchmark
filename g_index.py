@@ -25,18 +25,24 @@ this is equal to, for any domain `C_n` in total n domains in curricula `C` -
 `avg_across_T(θ * Σ (P(C_n) * ( (GD(T_i,C_n)/(P + E(C_n)) ))))`
 
 """
-# from node_utils import node_divergence
-import statistics
-import numpy as np
-from utils import domain_distance, Dataset, DatasetDetails,get_template,AVAILABLE_TEMPLATES
-from collections import defaultdict
-from dataclasses import dataclass, field, asdict
-from typing import Dict, List,Union
-import os 
-import seaborn as sns
 import itertools
 import json
+import os
+from re import template
+import statistics
+from collections import defaultdict
+from dataclasses import asdict, dataclass, field
+from typing import Dict, List, Union
+
+import numpy as np
 import pandas as pd
+import seaborn as sns
+
+from node_utils import node_divergence
+from utils import (AVAILABLE_TEMPLATES,TEMPLATE_DETAILS, Dataset, DatasetDetails,
+                   domain_distance, get_template,)
+
+
 
 @dataclass(frozen=True)
 class ExperimentIndices:
@@ -68,7 +74,6 @@ class Benchmark:
             task_contribution = self.get_performance_theta(task)
             task_contributions.append(task_contribution)
         avg_performance = statistics.mean(task_contributions)
-        # print(task_contributions)
         return round(avg_performance, 4)
 
     def get_curricula_domains(self) -> Dict:
@@ -140,7 +145,6 @@ class Benchmark:
         """
         `experience (E)` : exposure of the `IS` to `Curricula` (tentative : compute * curricula?)
         """
-        compute_norm_factor = 0.001
         training_compute = self.get_task_compute()
         return np.log(training_compute)
 
@@ -152,28 +156,20 @@ class Benchmark:
                 "dag_length" : {
                      "inflated": 937.0,
                      "deflated": 429.2,
-                },
-                "prompt_length": 252.4
-        }
+                }
         """
-
-        if domain["name"] in AVAILABLE_TEMPLATES():
-            tmp = get_template(domain["name"])
-            template_details = tmp.to_details().dict()
-            # print(template_details)
+        if domain["name"] in AVAILABLE_TEMPLATES:
             extracted_details = {
-                'dag_length' : template_details.get("dag_length"),
-                'prompt_length' : template_details.get("prompt_length"),
+                "dag_length" : TEMPLATE_DETAILS.get(domain["name"]),
             }
-           
+
             return extracted_details
         else :
             return {
                 "dag_length" : {
                      "inflated": 0,
                      "deflated": 0,
-                },
-                "prompt_length": 0
+                }
             }
 
     def get_performance_theta(self, task: Dict) -> float:
@@ -183,13 +179,10 @@ class Benchmark:
         performance_per_template = self.experiment["performance"]["templates"]
         selected_task = next(
             (x for x in performance_per_template if x["name"] == task["name"]), None)
-        # sprint("selected task:", selected_task)
         domain_details = self.get_domain_details(selected_task)
-        # more the divergence, lesser the performance
         performance = 1 - selected_task["divergence"]
-        # performance_theta = (1 - DS) * deflated_length
-        # return performance
-        return performance * domain_details['dag_length']["deflated"]
+
+        return performance * domain_details["dag_length"]["deflated"]
 
     def get_generalization_difficulty(self, task_domain: Dict, curriculum_domain: Dict) -> float:
         """
@@ -210,7 +203,6 @@ class Benchmark:
         curriculum_dataset_details = DatasetDetails(total=total_samples, data=[{"name": curriculum_domain["name"], "num_samples":total_samples}])
         domain_distance_score = domain_distance(Dataset.from_details(
             task_dataset_details), Dataset.from_details(curriculum_dataset_details))
-        # print(domain_distance_score)
         return domain_distance_score
 
     def _drop_duplicate_tuples(self,l):
@@ -231,7 +223,6 @@ class Benchmark:
         P = self.get_priors()
         E = self.get_experience()
         Ptheta = { task.get('name'):self.get_performance_theta(task) for task in TaskDomains }
-
         #Finding out Contribution for every task
         TaskContributions = defaultdict()
         for task in TaskDomains:
