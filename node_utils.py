@@ -5,15 +5,12 @@ two DAGs are the exact same, the subgraph isomorphism will be of maximum size
 and node divergence and edge divergence will be zero.
 
 """
-import argparse
 import json
-import os
 import re
 from random import randrange
 from typing import List
 
 import networkx as nx
-import numpy as np
 from pydantic import BaseModel, Field, validator
 
 GENERATE_NODEID = lambda: "%08x.fed%03x" % (

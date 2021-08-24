@@ -28,7 +28,6 @@ this is equal to, for any domain `C_n` in total n domains in curricula `C` -
 import itertools
 import json
 import os
-from re import template
 import statistics
 from collections import defaultdict
 from dataclasses import asdict, dataclass, field
@@ -39,9 +38,8 @@ import pandas as pd
 import seaborn as sns
 
 from node_utils import node_divergence
-from utils import (AVAILABLE_TEMPLATES,TEMPLATE_DETAILS, Dataset, DatasetDetails,
-                   domain_distance, get_template,)
-
+from utils import (AVAILABLE_TEMPLATES, TEMPLATE_DETAILS, Dataset,
+                   DatasetDetails, domain_distance)
 
 
 @dataclass(frozen=True)

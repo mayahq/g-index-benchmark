@@ -1,13 +1,14 @@
-import os
-import json
 import dataclasses
-import numpy as np
+import glob
+import json
+import os
 from datetime import datetime
-from typing import Union, List, Dict
+from typing import Dict, List, Union
+
+import numpy as np
 from pydantic import BaseModel, Field, validator
 from pydantic.dataclasses import dataclass
 from node_utils import node_divergence
-import glob
 
 files = glob.glob(os.path.join(os.getcwd(),"templates","*.json"))
 AVAILABLE_TEMPLATES = [os.path.basename(fname).split(".")[0] for fname in files]
