@@ -1,6 +1,6 @@
 # Towards a Measure of General Intelligence
 ## Introduction
-This repository contains the code to measure [g-index](#g-index) for an [experiment](#experiment)
+This repository contains the code to measure `g-index` for an experiment as described in the paper [Towards a Measure of General Intelligence](https://www.example.com)
 
 ## Results 
 
@@ -49,10 +49,11 @@ This repository contains the code to measure [g-index](#g-index) for an [experim
    ```bash
         pip install -r requirements.txt
     ```
-2. Follow the instructions [here](#request-data) to request the data
-3. After getting the data, verify you have the following folders copied to the root of the repository
-    1. experiments
-    2. templates
+2. Follow the instructions [here](#request-the-data) to request the data
+3. After getting the data, verify you have the following copied to the root of the repository
+    1. experiments folder
+    2. templates folder
+    3. lengths.json file
 
 ### Using the Command Line 
 The command line offers various flags to reproduce the results as claimed in the paper.
