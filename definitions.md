@@ -1,4 +1,6 @@
 ## Definitions
+### `g-index` :
+A measure of intelligence defined as average of `TC` across all `tasks_scope`, : `avg_across_TC(θ * Σ (P(C_n) * ( (GD(T_i,C_n)/(P + E(C_n)) ))))`
 ### `Intelligent System (IS)` : 
 The intelligent system (IS) generates a `Skill Program (S)` to do `Task (T)`
 ### `Task (T)`: 
@@ -29,5 +31,3 @@ Exposure of the `IS` to `Curricula` (tentative : compute * curricula?)
 Contribution of performance on one `task (T)` to the overall `g_index`  this is equal to, for any domain `C_n` in total n domains in curricula `C`  = `θ * Σ (P(C_n) * ( (GD(T,C_n)/(P + E(C_n)) )))`
 ### `Tasks Scope` or `Task Domains`: 
 All the Tasks/Domains in the test array
-### `g-index` :
-A measure of intelligence defined as average of `TC` across all `tasks_scope`, : `avg_across_TC(θ * Σ (P(C_n) * ( (GD(T_i,C_n)/(P + E(C_n)) ))))`
