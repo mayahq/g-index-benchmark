@@ -1,6 +1,7 @@
 # Towards a Measure of General Intelligence
 ## Introduction
 This repository contains the code to measure [g-index](definitions.md) for an experiment as described in the paper [here](https://www.example.com)
+
 ## Results 
 
 <table>
@@ -65,6 +66,17 @@ The command line offers various flags to reproduce the results as claimed in the
 5. `-rs` `--rum_simulation` &nbsp; [Optional &nbsp; `Bool`]: Set whether to calculate `g-index` using the simulated values.
 6. `-sf` `--sim_json` &nbsp; [Optional &nbsp; `String`]: JSON file with values to run simulation in case of `run_simulation == True`. 
 Alternatively, you can also run `python main.py -h` to see the available options
+
+### Running the Simulations:
+Calculating `g-index` using simulated values is supported, however only for studying the behaviour of the `g-index` w.r.t to various indices of the experiment. It might be possible that the simulated values of `g-index` might never be achievable through experiments. Following are the steps:
+1. Open [values.json](assets/values.json) located under assets.
+2. Set the values of the various Experiment Indices (refer to [definitions.md](definitions.md)) 
+3. After setting the desired values, simply run 
+    ```bash 
+    python main.py -p True -s True -rs True -sf assets/values.json 
+    ```
+4. Results will be printed and saved under results which can be used for plotting.
+
 ### Request the data
 You can send us a mail at [humans@mayahq.com](mailto:humans@mayahq.com) breifly describing your use case to get the data.
 
