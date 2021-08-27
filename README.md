@@ -75,7 +75,7 @@ Calculating `g-index` using simulated values is supported, however only for stud
     ```bash 
     python main.py -p True -s True -rs True -sf assets/values.json 
     ```
-4. Results will be printed and saved under results which can be used for plotting.
+4. Results will be printed and saved under `results` folder which can be used for plotting.
 
 ### Request the data
 You can send us a mail at [humans@mayahq.com](mailto:humans@mayahq.com) breifly describing your use case to get the data.
