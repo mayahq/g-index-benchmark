@@ -58,17 +58,19 @@ def get_node_similarity(node1, node2):
 
     # TODO: Fill this later if necessary #
     __skip_compares__ = set(
-        "id",
-        "x",
-        "y",
-        "z",
-        "wires",
-        "type",
-        "endpointUrl",  # for bot-intent type nodes
-        "name",  # for ui_ nodes
-        "group",  # for ui_ nodes
-        "tab",  # for all_ nodes
-        "label",  # for tab nodes
+        [
+            "id",
+            "x",
+            "y",
+            "z",
+            "wires",
+            "type",
+            "endpointUrl",  # for bot-intent type nodes
+            "name",  # for ui_ nodes
+            "group",  # for ui_ nodes
+            "tab",  # for all nodes
+            "label",  # for tab nodes
+        ]
     )
 
     num = 0
@@ -151,10 +153,10 @@ def create_product_graph(nmap, flow1, flow2):
             # is there is an edge between the corresponding two nodes in flow2?
             e_b = has_edge(flow2, k2a, k2b)
 
-            if (not (e_a ^ e_b)) and (wta == 1.0) and (wtb == 1.0):
-                # if e_a, e_b above have the same answer
-                # AND the node mappings are perfect (all props match)
-                # add the edge to the product graph
+            if not (e_a ^ e_b):
+                # if (k1a, k1b) ⇔  (k2a, k2b), AND
+                # the mapped nodes are of the same type,
+                # add edge to product graph
                 ind1 = nmap.index((k1a, k2a, wta))
                 ind2 = nmap.index((k1b, k2b, wtb))
                 edge = (min(ind1, ind2), max(ind1, ind2))
@@ -189,32 +191,43 @@ def large_graph_corr(pgraph, nmap, flow1, flow2):
         # highly dense graphs => node mapping is not strict enough,
         # (too many nodes of same type) so computing the exact value is SLOW
         # hence approximate via heuristic (some form of penalty)
-        clique = G.get_max_clique(use_heuristic=True, use_dfs=False)
+        clique0 = G.get_max_clique(use_heuristic=True, use_dfs=False)
         # note that the approximate clique is <= the exact clique
         exact = False
     else:
-        clique = G.get_max_clique(use_heuristic=True, use_dfs=True)
+        clique0 = G.get_max_clique(use_heuristic=True, use_dfs=True)
 
+    clique = max(
+        G.all_cliques(size=len(clique0)), key=setup_weighted_clique(nmap, flow1, flow2)
+    )
     subset = [nmap[i - 1] for i in clique]
     return subset, exact
+
+
+def setup_weighted_clique(nmap, flow1, flow2):
+    def clique_wt(clq):
+        wts = [nmap[x - 1][2] for x in clq]
+        return sum(wts)
+
+    return clique_wt
 
 
 def small_graph_corr(pgraph, nmap, flow1, flow2):
     G = nx.Graph()
     G.add_nodes_from(i + 1 for i in range(len(nmap)))
     G.add_edges_from([(a + 1, b + 1) for a, b in pgraph])
-    clique = max(nx.algorithms.clique.find_cliques(G), key=lambda x: len(x))
+    clique = max(
+        nx.algorithms.clique.find_cliques(G),
+        key=setup_weighted_clique(nmap, flow1, flow2),
+    )
     subset = [nmap[x - 1] for x in clique]
-    if len(subset) > 1:
-        for x in subset:
-            assert x[2] == 1
     return subset, True
 
 
 def find_correspondence(pgraph, nmap, flow1, flow2):
     if len(pgraph) == 0 and len(nmap) == 0:
         return [], True
-    elif len(pgraph) < 100:
+    elif len(pgraph) < 2000:
         return small_graph_corr(pgraph, nmap, flow1, flow2)
     else:
         return large_graph_corr(pgraph, nmap, flow1, flow2)
@@ -247,20 +260,7 @@ def edge_similarity(edgemap, nodemap, flow1, flow2):
 
 def node_similarity(subset, nodemap, flow1, flow2):
     if num_nodes(flow1) != 0 and num_nodes(flow2) != 0:
-        yet_to_map = (
-            set(flow1.keys()) - set(x[0] for x in subset),
-            set(flow2.keys()) - set(x[1] for x in subset),
-        )
-        partial_map = dict()
-        for k1, k2, wt in sorted(nodemap, key=lambda x: -x[2]):
-            if k1 in yet_to_map[0] and k2 in yet_to_map[1]:
-                partial_map[k1] = (k2, wt)
-                yet_to_map[0].remove(k1)
-                yet_to_map[1].remove(k2)
-
-        frac_score = sum(x[1] for x in partial_map.values())
-
-        score = len(subset) + frac_score
+        score = sum(x[2] for x in subset)
         answer = (score / num_nodes(flow1)) * (score / num_nodes(flow2))
         return answer
     else:
@@ -291,11 +291,11 @@ def node_divergence(flow1, flow2):
 
 
 def edge_divergence(flow1, flow2):
-    return get_divergence(flow1, flow2, False)[1]
+    return get_divergence(flow1, flow2, True)[1]
 
 
 def runner(file1, file2):
-    divergence = get_divergence(get_flow(file1), get_flow(file2), False)
+    divergence = get_divergence(get_flow(file1), get_flow(file2), False)[0]
     return divergence
 
 
