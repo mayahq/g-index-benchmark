@@ -1,0 +1,66 @@
+{
+  "template-slider": {
+    "inflated": 3305.0,
+    "deflated": 674.0
+  },
+  "template-form": {
+    "inflated": 2038.0,
+    "deflated": 590.0
+  },
+  "cron-reminder": {
+    "inflated": 994.0,
+    "deflated": 480.0
+  },
+  "cron-schedule": {
+    "inflated": 897.0,
+    "deflated": 322.0
+  },
+  "facebook": {
+    "inflated": 2176.0,
+    "deflated": 527.0
+  },
+  "gmail-send": {
+    "inflated": 4739.0,
+    "deflated": 1425.0
+  },
+  "google-search": {
+    "inflated": 2929.0,
+    "deflated": 922.0
+  },
+  "googlesearch-to-csv": {
+    "inflated": 3922.0,
+    "deflated": 1236.0
+  },
+  "http": {
+    "inflated": 866.0,
+    "deflated": 145.0
+  },
+  "telegram-2-reply": {
+    "inflated": 2284.0,
+    "deflated": 620.0
+  },
+  "telegram-3-reply": {
+    "inflated": 2934.0,
+    "deflated": 806.0
+  },
+  "twitter": {
+    "inflated": 887.0,
+    "deflated": 107.0
+  },
+  "url-skill": {
+    "inflated": 1049.0,
+    "deflated": 380.0
+  },
+  "youtube-pause": {
+    "inflated": 922.0,
+    "deflated": 231.0
+  },
+  "youtube-play": {
+    "inflated": 3016.0,
+    "deflated": 904.0
+  },
+  "youtube-resume": {
+    "inflated": 921.0,
+    "deflated": 229.0
+  }
+}

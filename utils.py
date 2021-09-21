@@ -52,6 +52,7 @@ class TemplateInfo:
             raise ValueError(f"num_samples {v} < 0 !!")
         return v
 
+
 @dataclass
 class DatasetDetails:
     data: List[TemplateInfo] = dataclasses.field(default_factory=lambda: [])
@@ -107,6 +108,7 @@ class Dataset(BaseModel):
         for k, v in self.data.items():
             for tmp in v:
                 yield tmp
+
 
 def domain_distance(train_set: Dataset, test_set: Dataset) -> float:
     ovr_values = []
