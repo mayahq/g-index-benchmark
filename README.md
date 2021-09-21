@@ -1,55 +1,47 @@
 # Towards a Measure of General Intelligence
 ## Introduction
-This repository contains the code to measure [g-index](definitions.md) for an experiment as described in the paper [here](https://www.example.com)
+This repository contains the code to measure [g-index](definitions.md) for an experiment as described in the [paper](https://www.example.com)
+
+# Table of Contents
+  * [Results](#results)
+  * [Plots](#plots)
+  * [Usage](#usage)
+  * [Running the Simulations](#running-the-simulations)
+    + [Preparation:](#preparation-)
+    + [Using the Command Line](#using-the-command-line)
+      - [Options](#options)
+    + [Running the Simulations:](#running-the-simulations-)
+    + [Request the data](#request-the-data)
+  * [License](#license)
+  * [Cite Us!](#cite-us)
 
 ## Results 
-
-<table>
-<thead>
-<tr>
-<th>Model Name</th>
-<th>Number of <br> Parameters</th>
-<th> G Index</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>OpenAI GPT2 Medium</td>
-<td>345M</td>
-<td>1</td>
-</tr>
-<tr>
-<td>OpenAI GPT2 Large</td>
-<td>774M</td>
-<td>1</td>
-</tr>
-<tr>
-<td>OpenAI GPT2 XLarge</td>
-<td>1.5B</td>
-<td>1</td>
-</tr>
-<tr>
-<td>EleutherAI GPT Neo</td>
-<td>2.7B</td>
-<td>1</td>
-</tr>
-</tbody>
-</table>
+|    | Model Name   | \# Training Samples | Compute Used                                  | $\theta$       | g_index           |
+|----|--------------|---------------------|-----------------------------------------------|----------------|-------------------|
+| 1. | GPT2-345M    | 2560                | 127.530                                       | 0.697          | 7902.972          |
+| 2. | GPT Neo-2.7B | 2560                | 8969.100                                      | 0.682          | 6421.049          |
+| 3. | GPT2-1.5B    | 5120                | 5927.400                                      | 0.708          | 6390.314          |
+| 4. | GPT2-1.5B    | 10240               | 11563.320                                     | 0.683          | 6006.261          |
+| 5. | GPT2-774M    | 2560                | 1516.640                                      | 0.620          | 4872.334          |
+| 6. | GPT Neo-2.7B | 1280                | 5063.380                                      | 0.582          | 4476.680          |
+| 7. | GPT2-345M    | 1280                | 74.750                                        | 0.547          | 4399.190          |
+| 8. | GPT2-774M    | 5120                | 2941.941                                      | 0.585          | 4070.117          |
 <blockquote>
- Each model was trained on 8000 samples and 30 epochs 
+ Each model was trained for 30 epochs 
 </blockquote>
 
 ## Plots
-<!-- [Replace this with a useful plot](images/sample.png "Replace this with a useful plot") -->
-<img src="images/sample.png" alt="Replace this with a useful plot" style="height: 400px; width:400px;"/>
+<!-- <img src="images/theta_g-index_heatmap.jpg" alt="Replace this with a useful plot" /> -->
+<!-- <center>g-index vs θ </center> -->
+<!-- <img src="images/sample.png" alt="Replace this with a useful plot" style="height: 400px; width:400px;"/> -->
 
-## Usage
+## Running the Simulations
 ### Preparation:
 1. Install the Python package requirements via the following command:
    ```bash
         pip install -r requirements.txt
     ```
-2. Follow the instructions [here](#request-the-data) to request the data
+2. 
 3. After getting the data, verify you have the following copied to the root of the repository
     1. experiments folder
     2. templates folder

@@ -10,20 +10,37 @@ from pydantic import BaseModel, Field, validator
 from pydantic.dataclasses import dataclass
 from node_utils import node_divergence
 
-files = glob.glob(os.path.join(os.getcwd(),"templates","*.json"))
+files = glob.glob(os.path.join("templates","*.json"))
 AVAILABLE_TEMPLATES = [os.path.basename(fname).split(".")[0] for fname in files]
 
 try:
-    with open('lengths.json','r') as f:
+    with open('assets/lengths.json','r') as f:
         TEMPLATE_DETAILS  = json.load(f)
 except FileNotFoundError:
     print("No `lengths.json` was found, Using zero values for lengths, Please note that you would not be able to get reproduce results without it.")
     TEMPLATE_DETAILS = {temp_name: {"inflated":0,"deflated":0} for temp_name in AVAILABLE_TEMPLATES}
 
 def get_template(template_key: str,template_dir:str = "templates") -> Dict:
-    return json.load(open(os.path.join(template_dir,template_key + ".json")))
+    json_file = os.path.join(template_dir,template_key + ".json")
+    try:
+        return json.load(open(json_file))
+    except FileNotFoundError as fe:
+        print(f"No template of the type {template_key} found")
 
+def cache_dd():
+    dd_cache = defaultdict()
+    for ta in AVAILABLE_TEMPLATES:
+        for tb in AVAILABLE_TEMPLATES:
+            if (tb,ta) in dd_cache.keys():
+                dd_cache[(ta,tb)] = dd_cache[(tb,ta)]
+            else:
+                ta_details = DatasetDetails(total=2, data=[{"name": ta, "num_samples":2}])
+                tb_details = DatasetDetails(total=2, data=[{"name":tb, "num_samples":2}])
+                dd_cache[(ta,tb)] = domain_distance(Dataset.from_details(
+                ta_details), Dataset.from_details(tb_details))
+    return dd_cache
 
+        
 @dataclass
 class TemplateInfo:
     name: str

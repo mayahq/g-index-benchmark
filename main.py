@@ -5,7 +5,7 @@ import os
 from collections import defaultdict
 from datetime import datetime
 
-from g_index import Benchmark
+from g_index_final import Benchmark,cache_dd
 
 
 def main(args):
@@ -19,9 +19,9 @@ def main(args):
     if not len(exp_files):
         print("No Experiment Files found in this directory, Please select the right directory")
         return
-
+    dd_cache = cache_dd()
     for fpath in exp_files:
-        exp = Benchmark(json.load(open(fpath)))
+        exp = Benchmark(json.load(open(fpath)),dd_cache=dd_cache)
         records[fpath.split("/")[-1]] = exp.GetExperimentIndices(return_dict=True)
         if args.print_metrics:
             print(records[fpath.split("/")[-1]])

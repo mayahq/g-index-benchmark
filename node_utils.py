@@ -213,16 +213,22 @@ def create_product_graph(nmap, flow1, flow2):
 
     return list(prodgraph)
 
+def setup_weighted_clique(nmap, flow1, flow2):
+    def clique_wt(clq):
+        wts = [nmap[x - 1][2] for x in clq]
+        return sum(wts)
+    return clique_wt
+
 def graph_corr(pgraph, nmap, flow1, flow2):
     G = nx.Graph()
     G.add_nodes_from(i + 1 for i in range(len(nmap)))
     G.add_edges_from([(a + 1, b + 1) for a, b in pgraph])
-    clique = max(nx.algorithms.clique.find_cliques(G), key=lambda x: len(x))
+    clique = max(
+        nx.algorithms.clique.find_cliques(G),
+        key=setup_weighted_clique(nmap, flow1, flow2),
+    )
     subset = [nmap[x - 1] for x in clique]
-    if len(subset) > 1:
-        for x in subset:
-            assert x[2] == 1
-    return subset
+    return subset, True
 
 
 def find_correspondence(pgraph, nmap, flow1, flow2):
@@ -276,7 +282,7 @@ def node_divergence(full1, full2, edges_only=True):
     flow2 = simplify_flow(full2)
     nmap = get_nodemap(flow1, flow2)
     pg = create_product_graph(nmap, flow1, flow2)
-    corr = find_correspondence(pg, nmap, flow1, flow2)
+    corr,_ = find_correspondence(pg, nmap, flow1, flow2)
 
     return 1 - node_similarity(corr, nmap, flow1, flow2)
 
