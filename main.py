@@ -5,7 +5,7 @@ import os
 from collections import defaultdict
 from datetime import datetime
 
-from g_index_final import Benchmark,cache_dd
+from g_index import Benchmark, cache_dd
 
 
 def main(args):

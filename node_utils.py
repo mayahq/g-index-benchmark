@@ -56,7 +56,6 @@ def get_node_similarity(node1, node2):
     if node1["type"] != node2["type"]:
         return 0
 
-    # TODO: Fill this later if necessary #
     __skip_compares__ = set(
         [
             "id",
@@ -80,28 +79,19 @@ def get_node_similarity(node1, node2):
         if x in __skip_compares__:
             continue
 
-        # TODO:
-        # skip node1[x] is str and matches ID regex:
-        #
-        # skip if attrs have a default_factory and don't need to be compared
-
         den += 1
         inc = 1
         val1 = node1.get(x, None)
         val2 = node2.get(x, None)
         if (val1 is None) ^ (val2 is None):
-            # print(type(node1).__name__, "failed at", x)
             inc = 0
         elif not isinstance(val1, type(val1)) and not isinstance(val1, type(val2)):
-            # print(type(node1).__name__, "failed at", x)
             inc = 0
         elif val1 != val2:
-            # print(type(node1).__name__, "failed at", x)
             inc = 0
 
         num += inc
 
-    # print(node1["type"], f"{num}/{den} properties match")
     if den == 0 or num == den:
         return 1
     else:
@@ -297,26 +287,3 @@ def edge_divergence(flow1, flow2):
 def runner(file1, file2):
     divergence = get_divergence(get_flow(file1), get_flow(file2), False)[0]
     return divergence
-
-
-def main():
-    parser = argparse.ArgumentParser(
-        description="compare two JSON flows and return a divergence score"
-    )
-    parser.add_argument(
-        "file1",
-        type=argparse.FileType(mode="r"),
-        help="path to JSON file 1. must have flow attribute",
-    )
-    parser.add_argument(
-        "file2",
-        type=argparse.FileType(mode="r"),
-        help="path to JSON file 2. must have flow attribute",
-    )
-
-    d = parser.parse_args()
-    print(runner(d.file1, d.file2))
-
-
-if __name__ == "__main__":
-    main()

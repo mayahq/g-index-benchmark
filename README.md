@@ -30,10 +30,6 @@ This repository contains the code to measure [g-index](definitions.md) for an ex
  Each model was trained for 30 epochs 
 </blockquote>
 
-## Plots
-<!-- <img src="images/theta_g-index_heatmap.jpg" alt="Replace this with a useful plot" /> -->
-<!-- <center>g-index vs θ </center> -->
-<!-- <img src="images/sample.png" alt="Replace this with a useful plot" style="height: 400px; width:400px;"/> -->
 
 ## Running the Simulations
 ### Preparation:

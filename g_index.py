@@ -1,4 +1,3 @@
-import itertools
 import json
 import os
 from collections import defaultdict
@@ -10,9 +9,10 @@ from typing import Dict, List, Union
 import numpy as np
 import pandas as pd
 import seaborn as sns
-from node_utils import node_divergence
-from utils import (AVAILABLE_TEMPLATES, TEMPLATE_DETAILS, Dataset,
-                   DatasetDetails, domain_distance,cache_dd)
+
+from utils import (AVAILABLE_DOMAINS, DOMAIN_LENGTHS, DOMAIN_ROOT, cache_dd,
+                   calculate_dd)
+
 
 def nsplit(n_samples_total, num_domains):
     ans = []
@@ -68,19 +68,21 @@ class Benchmark:
             self.dd_cache = dd_cache
         elif self.use_dd_cache :
             self.dd_cache = cache_dd()
-            print(dd_cache)
         else:
             self.dd_cache = None
 
-    def get_curricula_domains(self) -> Dict:
+    def get_curricula_domains(self,return_total: bool = False)-> Union[Dict,int]:
         """
         This takes in a list of templates in the training array and returns
         a set of curriculum domains. In initial versions this is just a list of all templates, with 
-        number of samples per template.
+        number of samples per Domain.
         """
-        return self.experiment["train_set"]["data"]
-
-    def probability_of_curricula(self, curriculum, curricula_domains):
+        if self.experiment:
+            if return_total:
+                return self.experiment["train_set"]["total"]
+            return self.experiment["train_set"]["data"]
+            
+    def probability_of_curricula(self, curriculum: Dict) -> float:
         """
         What is the probability of the given curriculum domain occurring in 
         the complete curricula. Initially, this is just (number_of_samples_of_templateN/total_no_of_samples)
@@ -88,25 +90,32 @@ class Benchmark:
         probability = 1/(1+ np.log2(curriculum["num_samples"]))
         return probability
 
-    def get_task_domains(self) -> Dict:
+    def get_task_domains(self,return_total: bool = False) -> Union[Dict,int]:
         """
         Get a list of all tasks, i.e. scope of tasks
         """
-        return self.experiment["test_set"]["data"]
+        if self.experiment:
+            if return_total:
+                return self.experiment["test_set"]["total"]
+            return self.experiment["test_set"]["data"]
 
     def get_priors(self)-> float:
         """
         `priors (P)` : data which is built into the system _before_ training (are you fine-tuning something already fine-tuned?). This is negligible (~0) for most of current models.
         """
-        return 0.0001
+        return 1e-4
     
-    def get_task_compute(self) ->float:
+    def get_task_compute(self) -> float:
         """
         compute exposure to a curricula
         """
         return self.experiment["train_cost"]["compute"] + self.experiment["test_cost"]["compute"]
 
-    def get_experience(self):
+    def get_is_name(self) -> str:
+        if self.experiment:
+            return self.experiment["model"]["train_params"]["model_name"]
+
+    def get_experience(self) -> float:
         if self.E is not None:
             return np.log2(self.E)
         elif self.experiment is not None:
@@ -115,7 +124,7 @@ class Benchmark:
 
     def get_domain_details(self, domain: Dict ) -> Dict:
         """
-        In this case, this returns the template details for a given template.
+        In this case, this returns the details for a given Domain.
         Output : 
         {
                 "dag_length" : {
@@ -123,9 +132,9 @@ class Benchmark:
                      "deflated": 429.2,
                 }
         """
-        if domain["name"] in AVAILABLE_TEMPLATES:
+        if domain["name"] in AVAILABLE_DOMAINS:
             extracted_details = {
-                "dag_length" : TEMPLATE_DETAILS.get(domain["name"]),
+                "dag_length" : DOMAIN_LENGTHS.get(domain["name"]),
             }
 
             return extracted_details
@@ -137,7 +146,7 @@ class Benchmark:
                 }
             }
 
-    def get_performance_theta(self,task,raw_perf=False):
+    def get_performance_theta(self,task: Dict) -> float:
         if self.experiment:
             performance_per_template = self.experiment["performance"]["templates"]
             selected_task = next(
@@ -150,7 +159,7 @@ class Benchmark:
             return performance
 
 
-    def get_generalization_difficulty(self, task_domain, curriculum_domain):
+    def get_generalization_difficulty(self, task_domain: Dict , curriculum_domain: Dict) -> float:
         """
         returns the exponential generalization difficulty
         (domain_distance_score * 10)^e
@@ -158,7 +167,7 @@ class Benchmark:
         score = self.domain_distance_score(task_domain, curriculum_domain)
         return np.exp(score *10)
 
-    def domain_distance_score(self, task_domain, curriculum_domain):
+    def domain_distance_score(self, task_domain: Dict, curriculum_domain: Dict) ->float:
         if self.dd is not None:
             if isinstance(self.dd,Union[int,float].__args__):
                 return self.dd
@@ -168,32 +177,18 @@ class Benchmark:
         if self.use_dd_cache and self.dd_cache is not None:
             return self.dd_cache[(task_domain['name'],curriculum_domain['name'])]
         
-        total_samples = 2
-        task_dataset_details = DatasetDetails(total=total_samples, data=[{"name": task_domain["name"], "num_samples":total_samples}])
-        curriculum_dataset_details = DatasetDetails(total=total_samples, data=[{"name": curriculum_domain["name"], "num_samples":total_samples}])
-        domain_distance_score = domain_distance(Dataset.from_details(
-            task_dataset_details), Dataset.from_details(curriculum_dataset_details))
-
-        return domain_distance_score
-
-    def _drop_duplicate_tuples(self,l):
-        """
-        Drop the tuples (b,a) if (a,b) exists already
-        """
-        uniq = []
-        for i in l:
-            if not (i in uniq or tuple([i[1], i[0]]) in uniq):
-                uniq.append(i)
-        return uniq
+        task_domain_details = os.path.join(DOMAIN_ROOT,curriculum_domain["name"])
+        curriculum_domain_details = os.path.join(DOMAIN_ROOT,curriculum_domain["name"])
+        return calculate_dd(task_domain_details,curriculum_domain_details)
 
     def GetExperimentIndices(self,return_dict: bool =False) -> Union[ExperimentIndices,Dict]:
         TaskDomains = self.get_task_domains() if self.taskDomains is None else self.taskDomains
         CurriculaDomains = self.get_curricula_domains() if self.CurriculaDomains is None else self.CurriculaDomains
         GD = { task.get("name"): {curricula.get("name"): self.get_generalization_difficulty(task,curricula) for curricula in CurriculaDomains} for task in TaskDomains } if self.GD is None else self.GD
-        PC = { curricula.get("name"):self.probability_of_curricula(curricula,CurriculaDomains) for curricula in CurriculaDomains } if self.PC is None else self.PC
+        PC = { curricula.get("name"):self.probability_of_curricula(curricula) for curricula in CurriculaDomains } if self.PC is None else self.PC
         P = self.get_priors() if self.P is None else self.P
         E = self.get_experience()
-        Ptheta = { task.get("name"):self.get_performance_theta(task,raw_perf=True) for task in TaskDomains } if self.PTheta is None else self.PTheta
+        Ptheta = { task.get("name"):self.get_performance_theta(task) for task in TaskDomains } if self.PTheta is None else self.PTheta
         AvgPerf = round(mean(list(Ptheta.values())),3)
         
         TaskContributions = defaultdict()
@@ -213,19 +208,10 @@ class Benchmark:
             return asdict(exp_indices)
         return exp_indices
 
-    def generate_dd_matrix(self):
-        template_pair_half_grid = self._drop_duplicate_tuples(list(itertools.product(AVAILABLE_TEMPLATES,AVAILABLE_TEMPLATES)))
-        tp_dict = {f: json.load(open(os.path.join(os.getcwd(),'templates',f)))['flow'] for f in AVAILABLE_TEMPLATES }
-        df = pd.DataFrame(columns=AVAILABLE_TEMPLATES,index=AVAILABLE_TEMPLATES)
-        
-        for ent in template_pair_half_grid:
-            tp0,tp1 = ent[0], ent[1]
-            if df[tp1][tp0] != -1:
-                df[tp0][tp1] = df[tp1][tp0]
-            else:
-                df[tp0][tp1] = node_divergence(tp_dict.get(tp0,[]),tp_dict.get(tp1,[]))
+    def calculate_g_index(self) -> float:
+        return self.GetExperimentIndices().GIndex
 
-            if df[tp1][tp0] == -1.0 and df[tp0][tp1] != -1.0:
-                df[tp1][tp0] = df[tp0][tp1]
-
-        sns.heatmap(df,vmin=0.0,vmax=1.0,annot=True)
+    def get_avg_perf(self) ->float:
+        if self.experiment:
+            return (1 - self.experiment["performance"]["divergence"])
+    

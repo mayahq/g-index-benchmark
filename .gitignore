@@ -169,6 +169,6 @@ yarn-debug.log*
 yarn-error.log*
 
 .ipynb_checkpoint
-templates/
+domains/
 experiments/
 results/
