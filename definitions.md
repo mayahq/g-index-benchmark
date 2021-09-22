@@ -14,7 +14,7 @@ Data that the `IS` uses to train itself is denoted by `C` or Curricula, in our c
 ### `Curriculum Domain (C i)` :
 Refers to a subset of C where all tasks T ∈ C i belong to the same task domain.
 ### `Domain (D)` : 
-A related set of Tasks/Curricula. currently each template in our system can be it's own domain, but later we can group similar ones together into similar domains. 
+TODO
 ### `Divergence Score (DS)` : 
 TODO
 ### `Performance Theta (θ)` : 
@@ -24,7 +24,7 @@ Fractional node divergence between any two given domains.
 ### `Generalization Difficulty (GD)` : 
 `DS` between task domain & curricula domain.SSS
 ### `P(C_n)` : 
-Probability of finding curricula of domain type `C_i` in curricula. or (`samples_of_template_C_i`/`total_number_C_samples`)
+Probability of finding curricula of domain type `C_i` in curricula. or (`samples_of_domain_C_i`/`total_number_C_samples`)
 ### `Priors (P)` : 
 Information which is built into the `IS` _before_ training. This is negligible (~0) for most of current models.
 ### `Experience (E)` : 

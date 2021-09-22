@@ -11,8 +11,8 @@ from g_index import Benchmark, cache_dd
 def main(args):
     if not os.path.isdir(args.exp_dir):
         raise ValueError(f"Experiment Directory {args.exp_dir} doesn't exist")
-    if not os.path.isdir(args.temp_dir):
-        raise ValueError(f"Template Directory {args.temp_dir} doesn't exist")
+    if not os.path.isdir(args.domain_dir):
+        raise ValueError(f"Domain Directory {args.domain_dir} doesn't exist")
     
     exp_files = glob.glob(os.path.join(args.exp_dir,"*.json"))
     records = defaultdict(dict)
@@ -34,9 +34,9 @@ if __name__=='__main__':
     parser.add_argument('-e','--exp_dir',
                         default='experiments',
                         help='Set the directory where the experiment files are stored')
-    parser.add_argument('-t','--temp_dir',
-                        default='templates',
-                        help='Set the directory where the template files are stored')
+    parser.add_argument('-d','--domain_dir',
+                        default='domains',
+                        help='Set the directory where the domain files are stored')
     parser.add_argument('-p','--print_metrics',
                         default=False,
                         help='Set whether to print the metrics on the command line.')
