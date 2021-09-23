@@ -42,7 +42,7 @@ class ExperimentComponents:
 
 class Experiment:
 
-    def __init__(self, experiment=None, dd=None, use_dd_cache=True, dd_cache=None):
+    def __init__(self, experiment=None, use_dd_cache=True, dd_cache=None):
         if experiment is not None and isinstance(experiment, dict):
             self.experiment = experiment
             self.AVAILABLE_DOMAINS = set([domain['name'] for domain in self.experiment['train_set']['data']]).union(
@@ -56,9 +56,8 @@ class Experiment:
         else:
             self.experiment = None
             self.AVAILABLE_DOMAINS = AVAILABLE_DOMAINS
-
-        self.dd = dd
         self.use_dd_cache = use_dd_cache
+
         if self.use_dd_cache and dd_cache is not None:
             self.dd_cache = dd_cache
         elif self.use_dd_cache:
@@ -97,26 +96,21 @@ class Experiment:
                 (x for x in performance_per_domain if x["name"] == task["name"]), None)
             performance = 1 - selected_task["divergence"]
             return np.exp(performance*12)
-        elif sim_PTheta:
+        elif sim_PTheta is not None:
             return np.exp(sim_PTheta * 12)
 
-    def get_generalization_difficulty(self, task_domain: Dict = None, curriculum_domain: Dict = None, sim_GD: float = None) -> float:
+    def _get_gd(self, task_domain: Dict = None, curriculum_domain: Dict = None, sim_dd: float = None) -> float:
         """
         returns the exponential generalization difficulty
-        (domain_distance_score * 10)^e
+        e^(domain_distance_score * 10)
         """
-        if task_domain is None and curriculum_domain is None and sim_GD is not None:
-            return np.exp(sim_GD * 10)
+        if task_domain is None and curriculum_domain is None and sim_dd is not None:
+            return np.exp(sim_dd * 10)
 
-        score = self.domain_distance_score(task_domain, curriculum_domain)
+        score = self._domain_distance_score(task_domain, curriculum_domain)
         return np.exp(score * 10)
 
-    def domain_distance_score(self, task_domain: Dict, curriculum_domain: Dict) -> float:
-        if self.dd is not None:
-            if isinstance(self.dd, Union[int, float].__args__):
-                return self.dd
-            elif isinstance(self.dd, dict):
-                return self.dd.get(task_domain['name']).get(curriculum_domain['name'], 1.0)
+    def _domain_distance_score(self, task_domain: Dict, curriculum_domain: Dict) -> float:
 
         if self.use_dd_cache and self.dd_cache is not None:
             return self.dd_cache[(task_domain['name'], curriculum_domain['name'])]
@@ -132,7 +126,7 @@ class Experiment:
                      "performance": 1-d["divergence"], "perfects": d["perfects"]}
         return perf_dict
 
-    def get_exp_components(self, truncate_domains: bool = False, truncation_count: int = 2, return_dict: bool = False, print_members: bool = False,return_raw_experience: bool = False):
+    def get_exp_components(self, truncate_domains: bool = False, truncation_count: int = 2, return_dict: bool = False, print_members: bool = False, return_raw_experience: bool = False):
         if self.experiment:
             IS = self.experiment["model"]["train_params"]["model_name"]
             IS = IS.replace("/", " ") if "/" in IS else IS
@@ -142,7 +136,8 @@ class Experiment:
             PerformanceDetails = [self._get_perf_dict(
                 div_dict) for div_dict in PerformanceDetails]
 
-            E = self.get_experience(return_raw_experience=return_raw_experience)
+            E = self.get_experience(
+                return_raw_experience=return_raw_experience)
             GD = np.exp(self.experiment["domain_distance"]*10)
             AveragePerformance = 1-self.experiment['performance']['divergence']
 
@@ -184,7 +179,7 @@ class Experiment:
         TaskDomains = exp_components.TaskDomains
         CurriculaDomains = exp_components.CurriculaDomains
 
-        GD = {task.get("name"): {curricula.get("name"): self.get_generalization_difficulty(
+        GD = {task.get("name"): {curricula.get("name"): self._get_gd(
             task, curricula)for curricula in CurriculaDomains} for task in TaskDomains}
         PC = {curricula.get("name"): self.probability_of_curricula(
             curricula) for curricula in CurriculaDomains}
@@ -196,8 +191,8 @@ class Experiment:
 
         TaskContributions = defaultdict()
         for task in TaskDomains:
-            TaskContributions[task.get("name")] = np.sqrt(Ptheta.get(task.get("name")) * sum([GD.get(task.get("name")).get(
-                curricula.get("name")) * (PC.get(curricula.get("name")) / (P+E)) for curricula in CurriculaDomains]))
+            TaskContributions[task.get("name")] = self._get_task_contribution(
+                task=task, Ptheta=Ptheta, GD=GD, P=P, E=E, CurriculaDomains=CurriculaDomains)
         TaskContributions = dict(TaskContributions)
         GIndex = round(mean(list(TaskContributions.values())), 3)
         exp_indices = ExperimentIndices(GD=GD,
@@ -218,22 +213,40 @@ class Experiment:
     def calculate_g_index(self) -> float:
         return self._GetExperimentIndices().GIndex
 
-    def get_avg_perf(self) -> float:
-        if self.experiment:
-            return (1 - self.experiment["performance"]["divergence"])
+    def _get_task_contribution(self, task, Ptheta, GD, P, E, PC, CurriculaDomains):
+        task_name = task.get("name")
+        Ptheta_task = Ptheta.get(task_name)
+        total_sum = 0
+        for curricula_domain in CurriculaDomains:
+            curricula_name = curricula_domain.get("name")
+            GD_task = GD.get(task_name).get(curricula_name)
+            PC_task = PC.get(curricula_name)
+            total_sum += (GD_task * PC_task) / (P+E)
+        task_contribution = Ptheta_task * total_sum
+        return np.sqrt(task_contribution)
 
-    def _sim_gi(self, n_tasks_domain=5, n_curricula_domain=40, sim_P=1e-4, sim_E=1000, sim_PTheta=0.8, sim_GD=None):
+    def _sim_gi(self, n_tasks_domain=5, n_curricula_domain=40, sim_P=1e-4, sim_E=1000, sim_PTheta=0.8, sim_dd=None, CurriculaDomains=None):
 
         TaskDomains = [{"name": domain_name, "num_samples": n_tasks_domain}
                        for domain_name in self.AVAILABLE_DOMAINS]
-        CurriculaDomains = [{"name": domain_name, "num_samples": n_curricula_domain}
-                            for domain_name in self.AVAILABLE_DOMAINS]
-        if sim_GD is None:
-            GD = {task.get("name"): {curricula.get("name"): self.get_generalization_difficulty(
+
+        if CurriculaDomains is None:
+            CurriculaDomains = [{"name": domain_name, "num_samples": n_curricula_domain}
+                                for domain_name in self.AVAILABLE_DOMAINS]
+
+        if sim_dd is None:
+            GD = {task.get("name"): {curricula.get("name"): self._get_gd(
                 task_domain=task, curriculum_domain=curricula) for curricula in CurriculaDomains} for task in TaskDomains}
-        elif sim_GD is not None:
-            GD = {task.get("name"): {curricula.get("name"): self.get_generalization_difficulty(
-                sim_GD=sim_GD) for curricula in CurriculaDomains} for task in TaskDomains}
+
+        elif sim_dd is not None and isinstance(sim_dd, float):
+            GD = {task.get("name"): {curricula.get("name"): self._get_gd(
+                sim_dd=sim_dd) for curricula in CurriculaDomains} for task in TaskDomains}
+        elif sim_dd is not None and isinstance(sim_dd, dict):
+
+            GD = {task.get("name"):
+                  {curricula.get("name"): self._get_gd(
+                      sim_dd=sim_dd.get(task.get('name')).get(curricula.get('name'))) for curricula in CurriculaDomains} for task in TaskDomains}
+
 
         E = self.get_experience(sim_E)
         Ptheta = {task.get("name"): self.get_performance_theta(
@@ -243,8 +256,9 @@ class Experiment:
 
         TaskContributions = defaultdict()
         for task in TaskDomains:
-            TaskContributions[task.get("name")] = np.sqrt(Ptheta.get(task.get("name")) * sum([GD.get(task.get("name")).get(
-                curricula.get("name")) * (PC.get(curricula.get("name")) / (sim_P+sim_E)) for curricula in CurriculaDomains]))
+            #TaskContributions[task.get("name")] = np.sqrt(Ptheta.get(task.get("name")) * sum([GD.get(task.get("name")).get(curricula.get("name")) * (PC.get(curricula.get("name")) / (sim_P+sim_E)) for curricula in CurriculaDomains]))
+            TaskContributions[task.get("name")] = self._get_task_contribution(
+                task, Ptheta=Ptheta, GD=GD, P=sim_P, E=sim_E, PC=PC, CurriculaDomains=CurriculaDomains)
         TaskContributions = dict(TaskContributions)
         GIndex = round(mean(list(TaskContributions.values())), 3)
 
@@ -259,9 +273,17 @@ class Experiment:
 
         return sim_indices
 
-    def simulate_g_index(self, n_tasks_domain=5, n_curricula_domain=40, sim_GD=0.2, sim_P=1e-4, sim_E=1000, sim_PTheta=0.8, print_members=False, return_dict=False):
+    def simulate_g_index(self, n_tasks_domain: int = 5, n_curricula_domain: int = 40, sim_dd: Union[Dict, float] = None, sim_P: float = 1e-4,
+                         sim_E: float = 1000, sim_PTheta: float = 0.8, print_members: bool = False, return_dict: bool = False,
+                         CurriculaDistribution: Dict = None):
+        if CurriculaDistribution is not None:
+            CurriculaDomains = [{"name": domain_name, "num_samples": n_samples}
+                                for domain_name, n_samples in CurriculaDistribution.items()]
+        else:
+            CurriculaDomains = None
+
         sim_indices = self._sim_gi(n_tasks_domain=n_tasks_domain, n_curricula_domain=n_curricula_domain,
-                                   sim_GD=sim_GD, sim_P=sim_P, sim_E=sim_E, sim_PTheta=sim_PTheta)
+                                   sim_dd=sim_dd, sim_P=sim_P, sim_E=sim_E, sim_PTheta=sim_PTheta, CurriculaDomains=CurriculaDomains)
 
         if print_members:
             print_dataclass(sim_indices)

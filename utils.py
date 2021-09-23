@@ -6,7 +6,7 @@ import os
 import random
 from collections import defaultdict
 from statistics import mean
-from typing import Dict, List, Tuple, Union
+from typing import Dict, List, Union
 
 import numpy as np
 import pandas as pd
@@ -20,22 +20,22 @@ AVAILABLE_DOMAINS = [domain for domain in os.listdir(
     DOMAIN_ROOT) if domain not in ['.ipynb_checkpoints']]
 
 
-def nsplit(n_samples_total, num_domains):
-    ans = []
+def nsplit(n_samples_per_domain: int, num_domains: int) -> np.array:
+    n_samples_total = n_samples_per_domain * num_domains
+    result = []
     lim = n_samples_total - num_domains + 1
     for i in range(num_domains - 1):
-        ans.append(np.random.randint(1, lim, 1).item())
-        lim = lim - ans[-1] + 1
-    ans.append(lim)
-    return np.array(ans)
+        result.append(np.random.randint(1, lim, 1).item())
+        lim = lim - result[-1] + 1
+    result.append(lim)
+    return np.array(result)
 
 
-def resplit(n_samples_total, num_domains):
-    runs_to_sample = 0
+def resplit(n_samples_per_domain: int, num_domains: int) -> np.array:
     while True:
-        runs_to_sample += 1
-        sample = nsplit(n_samples_total, num_domains)
-        unique, counts = np.unique(sample, return_counts=True)
+        sample = nsplit(n_samples_per_domain, num_domains)
+        _, counts = np.unique(sample, return_counts=True)
+        # No Curricula Distribution distribution has same counts for more than 3 templates
         if np.all(counts < int(num_domains/5)):
             return sample
 
@@ -87,29 +87,29 @@ def calculate_dd(domain_1: Union[os.PathLike, str], domain_2: Union[os.PathLike,
         return node_divergence(json_file_1['flow'], json_file_2['flow'])
 
 
-def cache_dd():
+def cache_dd() -> Dict:
     dd_cache = defaultdict()
-    for ta in AVAILABLE_DOMAINS:
-        for tb in AVAILABLE_DOMAINS:
-            if (tb, ta) in dd_cache.keys():
-                dd_cache[(ta, tb)] = dd_cache[(tb, ta)]
+    for da in AVAILABLE_DOMAINS:
+        for db in AVAILABLE_DOMAINS:
+            if (db, da) in dd_cache.keys():
+                dd_cache[(da, db)] = dd_cache[(db, da)]
             else:
-                ta_root = os.path.join(DOMAIN_ROOT, ta)
-                tb_root = os.path.join(DOMAIN_ROOT, tb)
-                dd_cache[(ta, tb)] = calculate_dd(
-                    ta_root, tb_root, verbose=False)
+                da_root = os.path.join(DOMAIN_ROOT, da)
+                db_root = os.path.join(DOMAIN_ROOT, db)
+                dd_cache[(da, db)] = calculate_dd(
+                    da_root, db_root, verbose=False)
     return dd_cache
 
 
-def generate_dd_matrix(domains_list=None):
-    if domains_list is None:
-        domains_list = AVAILABLE_DOMAINS
-    df = pd.DataFrame(columns=domains_list,
-                      index=domains_list, dtype='float').fillna(-1)
+def generate_dd_matrix(domains: list = None):
+    if domains is None:
+        domains = AVAILABLE_DOMAINS
+    df = pd.DataFrame(columns=domains,
+                      index=domains, dtype='float').fillna(-1)
 
-    for d1 in domains_list:
+    for d1 in domains:
         d1_p = os.path.join(DOMAIN_ROOT, d1)
-        for d2 in domains_list:
+        for d2 in domains:
             d2_p = os.path.join(DOMAIN_ROOT, d2)
             score = calculate_dd(d1_p, d2_p)
             df[d1][d2] = score
@@ -117,11 +117,11 @@ def generate_dd_matrix(domains_list=None):
     sns.heatmap(df, vmin=0.0, vmax=1.0, annot=True)
 
 
-def scale_dots(gi_min, gi_max, current):
+def scale_dots(gi_min: float, current: float) -> float:
     return 120 * (1 + ((current - gi_min) / (gi_min)))
 
 
-def get_domain_lengths(domain_list=AVAILABLE_DOMAINS):
+def get_domain_lengths(domain_list=AVAILABLE_DOMAINS) -> Dict:
     DOMAIN_LENGTHS = defaultdict()
     for domain in domain_list:
         domain_files = glob.glob(os.path.join(DOMAIN_ROOT, domain)+"/*.json")
@@ -138,3 +138,10 @@ def print_dataclass(dc: dataclass):
     for field in dc.__dataclass_fields__:
         value = getattr(dc, field)
         print(field, ": ", value)
+
+
+def random_row_mean(multilevel_dict: Dict[str,Dict[str,float]]) -> float:
+    random_row = multilevel_dict.get(
+        np.random.choice(list(multilevel_dict.keys()))
+    ).values()
+    return np.mean(list(random_row))
