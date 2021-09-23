@@ -1,11 +1,12 @@
 # Towards a Measure of General Intelligence
+
+## Table of Contents
+  - [Introduction](#introduction)
+  - [Results](#results)
+    - [Guided Tour](#guided-tour)
+
 ## Introduction
 This repository contains the code to measure [g-index](definitions.md) for an experiment as described in the [paper](https://www.example.com)
-
-# Table of Contents
-  * [Results](#results)
-  * [License](#license)
-  * [Cite Us!](#cite-us)
 
 ## Results 
 |     | Model Name   | \# Training Samples | Compute Used | $\theta$ | g_index  |
@@ -20,8 +21,20 @@ This repository contains the code to measure [g-index](definitions.md) for an ex
 | 8.  | GPT2-774M    | 5120                | 2941.941     | 0.585    | 4070.117 |
 <blockquote>
  Each model was trained for 30 epochs 
-</blockquote>
+</blockquote><br>
 
+## Guided Tour 
+Following are the instructions to reproduce the results in the paper.<br>
+1. create a new conda/virtual environment 
+2. install project requirements with
+   ```bash
+          pip install -r requirements.txt
+      ```
+3. Start Jupyter Lab with 
+    ``` bash 
+        jupyter lab
+    ```
+4. open `Tutorials.ipynb` located under `notebooks` and follow the instructions.
 ### Request the data
 You can send us a mail at [humans@mayahq.com](mailto:humans@mayahq.com) breifly describing your use case to get the data.
 

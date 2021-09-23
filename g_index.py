@@ -192,7 +192,7 @@ class Experiment:
         TaskContributions = defaultdict()
         for task in TaskDomains:
             TaskContributions[task.get("name")] = self._get_task_contribution(
-                task=task, Ptheta=Ptheta, GD=GD, P=P, E=E, CurriculaDomains=CurriculaDomains)
+                task=task, Ptheta=Ptheta, GD=GD, P=P, E=E, PC=PC, CurriculaDomains=CurriculaDomains)
         TaskContributions = dict(TaskContributions)
         GIndex = round(mean(list(TaskContributions.values())), 3)
         exp_indices = ExperimentIndices(GD=GD,
@@ -246,7 +246,6 @@ class Experiment:
             GD = {task.get("name"):
                   {curricula.get("name"): self._get_gd(
                       sim_dd=sim_dd.get(task.get('name')).get(curricula.get('name'))) for curricula in CurriculaDomains} for task in TaskDomains}
-
 
         E = self.get_experience(sim_E)
         Ptheta = {task.get("name"): self.get_performance_theta(
