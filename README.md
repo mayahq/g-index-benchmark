@@ -1,10 +1,13 @@
 # Towards a Measure of General Intelligence
 
 ## Table of Contents
-  - [Introduction](#introduction)
-  - [Results](#results)
-    - [Guided Tour](#guided-tour)
-
+- [Table of Contents](#table-of-contents)
+- [Introduction](#introduction)
+- [Results](#results)
+- [Guided Tour](#guided-tour)
+- [License](#license)
+- [Request the data](#request-the-data)
+- [Cite Us!](#cite-us)
 ## Introduction
 This repository contains the code to measure [g-index](definitions.md) for an experiment as described in the [paper](https://www.example.com)
 
