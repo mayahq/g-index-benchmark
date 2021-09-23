@@ -25,7 +25,7 @@ This repository contains the code to measure [g-index](definitions.md) for an ex
 
 ## Guided Tour 
 Following are the instructions to reproduce the results in the paper.<br>
-1. create a new conda/virtual environment 
+1. create a new conda environment or a virtual environment.
 2. install project requirements with
    ```bash
           pip install -r requirements.txt
@@ -35,7 +35,7 @@ Following are the instructions to reproduce the results in the paper.<br>
         jupyter lab
     ```
 4. open `Tutorials.ipynb` located under `notebooks` and follow the instructions.
-### Request the data
+## Request the data
 You can send us a mail at [humans@mayahq.com](mailto:humans@mayahq.com) breifly describing your use case to get the data.
 
 ## License
