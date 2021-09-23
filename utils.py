@@ -75,15 +75,16 @@ def calculate_dd(domain_1: Union[os.PathLike, str], domain_2: Union[os.PathLike,
                 if score == 0:
                     break
             ovr_values.append(np.min(scores))
-        return round(np.mean(ovr_values),3)
+        return round(np.mean(ovr_values), 3)
 
     elif os.path.isfile(domain_1) and os.path.isfile(domain_2):
         if verbose:
             print("Calculating Domain Distance b/w two JSON files")
-            print(f"Selected JSONs are {domain_1.split('/')[-1]} & {domain_2.split('/')[-1]}")
+            print(
+                f"Selected JSONs are {domain_1.split('/')[-1]} & {domain_2.split('/')[-1]}")
         json_file_1 = json.load(open(domain_1))
         json_file_2 = json.load(open(domain_2))
-        return round(node_divergence(json_file_1['flow'], json_file_2['flow']),2)
+        return round(node_divergence(json_file_1['flow'], json_file_2['flow']), 2)
 
     else:
         print("Enter a Valid domain name or a domain file path")
@@ -142,7 +143,7 @@ def print_dataclass(dc: dataclass):
         print(field, ": ", value)
 
 
-def random_row_mean(multilevel_dict: Dict[str,Dict[str,float]]) -> float:
+def random_row_mean(multilevel_dict: Dict[str, Dict[str, float]]) -> float:
     random_row = multilevel_dict.get(
         np.random.choice(list(multilevel_dict.keys()))
     ).values()

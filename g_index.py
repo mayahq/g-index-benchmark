@@ -141,11 +141,11 @@ class Experiment:
             GD = np.exp(self.experiment["domain_distance"]*10)
             AveragePerformance = 1-self.experiment['performance']['divergence']
 
-            if len(CurriculaDomains) > truncation_count and truncate_domains:
-                print(f"Truncated Domains Data to {truncation_count} values")
+            if truncate_domains:
+                print(f"Truncating to {truncation_count} Domains")
                 CurriculaDomains = CurriculaDomains[:truncation_count]
-            if len(TaskDomains) > truncation_count and truncate_domains:
                 TaskDomains = TaskDomains[:truncation_count]
+                PerformanceDetails = PerformanceDetails[:truncation_count]
 
             exp_components = ExperimentComponents(IS=IS, CurriculaDomains=CurriculaDomains,
                                                   PerformanceDetails=PerformanceDetails, TaskDomains=TaskDomains,

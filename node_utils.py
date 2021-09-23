@@ -124,7 +124,8 @@ def get_nodemap(flow1, flow2):
             wt = mapping_weight(v1, v2)
             if wt > 0:
                 nodemap.append((k1, k2, wt))
-    nodemap.sort(key=lambda x: (len(flow1[x[0]]["wires"]) + len(flow2[x[1]]["wires"])))
+    nodemap.sort(key=lambda x: (
+        len(flow1[x[0]]["wires"]) + len(flow2[x[1]]["wires"])))
     return nodemap
 
 
@@ -237,7 +238,8 @@ def get_mapped_edges(subset, flow1, flow2):
 
             if e_a and e_b:
                 # successfully mapped the edge
-                mapped_edges[edge_to_string(k1a, k1b)] = edge_to_string(k2a, k2b)
+                mapped_edges[edge_to_string(
+                    k1a, k1b)] = edge_to_string(k2a, k2b)
     return mapped_edges
 
 
