@@ -1,0 +1,298 @@
+{
+    "title": "Flow generated from path data",
+    "text": "Send email with body 'criticism' and subject 'logic latter dhow whisker septicaemia alliance gladiolus' to email eM2bkKGNgl@XQdF2jGZTR.kig",
+    "flow": [
+        {
+            "id": "c8059c17.fed28c",
+            "type": "inject",
+            "z": "ef9c2982.fed3ba",
+            "x": 743.734,
+            "y": 417.036,
+            "wires": [
+                [
+                    "d2c4be13.fed1ad"
+                ]
+            ],
+            "name": "",
+            "topic": "",
+            "payload": "",
+            "payloadType": "date",
+            "repeat": "",
+            "crontab": "",
+            "once": false,
+            "onceDelay": 0.1,
+            "module": "node-red",
+            "props": [
+                {
+                    "p": "payload"
+                },
+                {
+                    "p": "topic",
+                    "vt": "str"
+                }
+            ]
+        },
+        {
+            "id": "d2c4be13.fed1ad",
+            "type": "change",
+            "z": "ef9c2982.fed3ba",
+            "x": 632.819,
+            "y": 365.266,
+            "wires": [
+                [
+                    "f05cb6b8.fed41b"
+                ]
+            ],
+            "name": "Set Params",
+            "rules": [
+                {
+                    "t": "set",
+                    "p": "payload.body",
+                    "pt": "msg",
+                    "to": "criticism",
+                    "tot": "str"
+                },
+                {
+                    "t": "set",
+                    "p": "payload.subject",
+                    "pt": "msg",
+                    "to": "logic latter dhow whisker septicaemia alliance gladiolus",
+                    "tot": "str"
+                },
+                {
+                    "t": "set",
+                    "p": "payload.email",
+                    "pt": "msg",
+                    "to": "eM2bkKGNgl@XQdF2jGZTR.kig",
+                    "tot": "str"
+                }
+            ],
+            "action": "",
+            "property": "",
+            "to": "",
+            "reg": false,
+            "module": "node-red",
+            "from": ""
+        },
+        {
+            "id": "f05cb6b8.fed41b",
+            "type": "maya-browser-find-tab",
+            "z": "ef9c2982.fed3ba",
+            "x": 709.873,
+            "y": 408.188,
+            "wires": [
+                [
+                    "b09fda17.fedacd"
+                ]
+            ],
+            "isProfileConfigNode": false,
+            "session": "",
+            "name": "",
+            "module": "maya-red-browser-automation",
+            "payloadTypequery": "json",
+            "query": "{\"url\":\"*://mail.google.com/*\"}"
+        },
+        {
+            "id": "b09fda17.fedacd",
+            "type": "switch",
+            "z": "ef9c2982.fed3ba",
+            "x": 704.824,
+            "y": 551.411,
+            "wires": [
+                [
+                    "d75a568a.fed906"
+                ],
+                [
+                    "1022e351.fed102"
+                ]
+            ],
+            "name": "",
+            "outputs": 2,
+            "rules": [
+                {
+                    "t": "lte",
+                    "v": "0",
+                    "vt": "num"
+                },
+                {
+                    "t": "gt",
+                    "v": "0",
+                    "vt": "num"
+                }
+            ],
+            "checkall": "true",
+            "repair": false,
+            "property": "tabs.length",
+            "propertyType": "msg",
+            "module": "node-red"
+        },
+        {
+            "id": "d75a568a.fed906",
+            "type": "maya-browser-open",
+            "z": "ef9c2982.fed3ba",
+            "x": 638.44,
+            "y": 669.882,
+            "wires": [
+                [
+                    "c393a150.fedb1f"
+                ]
+            ],
+            "isProfileConfigNode": false,
+            "session": "",
+            "url": "https://mail.google.com",
+            "name": "",
+            "module": "maya-red-browser-automation",
+            "payloadTypeurl": "str"
+        },
+        {
+            "id": "1022e351.fed102",
+            "type": "maya-browser-update-tab",
+            "z": "ef9c2982.fed3ba",
+            "x": 628.854,
+            "y": 605.384,
+            "wires": [
+                [
+                    "c393a150.fedb1f"
+                ]
+            ],
+            "payloadTypeupdates": "msg",
+            "payloadTypetabId": "msg",
+            "updates": "tabs[0].url",
+            "isProfileConfigNode": false,
+            "session": "",
+            "name": "",
+            "module": "maya-red-browser-automation",
+            "timeout": "2000",
+            "payloadTypetimeout": "num",
+            "tabId": "tabs[0].id"
+        },
+        {
+            "id": "c393a150.fedb1f",
+            "type": "maya-browser-click",
+            "z": "ef9c2982.fed3ba",
+            "x": 491.103,
+            "y": 673.919,
+            "wires": [
+                [
+                    "17d2b090.fed9d6"
+                ]
+            ],
+            "payloadTypetabId": "msg",
+            "isProfileConfigNode": false,
+            "payloadTypeindex": "num",
+            "session": "",
+            "name": "compose",
+            "module": "maya-red-browser-automation",
+            "timeout": "10000",
+            "index": "0",
+            "payloadTypeselector": "str",
+            "payloadTypetimeout": "num",
+            "selector": "//div[contains(@class,'T-I T-I-KE')]",
+            "tabId": "tabs[0].id"
+        },
+        {
+            "id": "17d2b090.fed9d6",
+            "type": "maya-browser-type",
+            "z": "ef9c2982.fed3ba",
+            "x": 365.411,
+            "y": 602.932,
+            "wires": [
+                [
+                    "c5a05b9f.fedf8e"
+                ]
+            ],
+            "payloadTypetabId": "msg",
+            "isProfileConfigNode": false,
+            "payloadTypeindex": "num",
+            "session": "",
+            "name": "Sender address",
+            "module": "maya-red-browser-automation",
+            "timeout": "2000",
+            "index": "0",
+            "payloadTypeselector": "str",
+            "payloadTypecontent": "msg",
+            "content": "payload.email",
+            "payloadTypetimeout": "num",
+            "selector": "//span[text()='To']/following::textarea",
+            "tabId": "tabs[0].id"
+        },
+        {
+            "id": "c5a05b9f.fedf8e",
+            "type": "maya-browser-type",
+            "z": "ef9c2982.fed3ba",
+            "x": 281.607,
+            "y": 491.608,
+            "wires": [
+                [
+                    "d1a443c8.fed295"
+                ]
+            ],
+            "payloadTypetabId": "msg",
+            "isProfileConfigNode": false,
+            "payloadTypeindex": "num",
+            "session": "",
+            "name": "Enter Subject",
+            "module": "maya-red-browser-automation",
+            "timeout": "2000",
+            "index": "0",
+            "payloadTypeselector": "str",
+            "payloadTypecontent": "msg",
+            "content": "payload.subject",
+            "payloadTypetimeout": "num",
+            "selector": "//input[@placeholder='Subject']",
+            "tabId": "tabs[0].id"
+        },
+        {
+            "id": "d1a443c8.fed295",
+            "type": "maya-browser-type",
+            "z": "ef9c2982.fed3ba",
+            "x": 203.335,
+            "y": 399.886,
+            "wires": [
+                [
+                    "6d9e60f4.fedf7f"
+                ]
+            ],
+            "payloadTypetabId": "msg",
+            "isProfileConfigNode": false,
+            "payloadTypeindex": "num",
+            "session": "",
+            "name": "Enter Body",
+            "module": "maya-red-browser-automation",
+            "timeout": "2000",
+            "index": "0",
+            "payloadTypeselector": "str",
+            "payloadTypecontent": "msg",
+            "content": "payload.body",
+            "payloadTypetimeout": "num",
+            "selector": "//div[@contenteditable='true']",
+            "tabId": "tabs[0].id"
+        },
+        {
+            "id": "6d9e60f4.fedf7f",
+            "type": "debug",
+            "z": "ef9c2982.fed3ba",
+            "x": 100.0,
+            "y": 314.489,
+            "wires": [],
+            "name": "",
+            "active": true,
+            "tosidebar": true,
+            "console": false,
+            "tostatus": false,
+            "complete": "false",
+            "module": "node-red",
+            "statusVal": "",
+            "statusType": "auto"
+        },
+        {
+            "id": "ef9c2982.fed3ba",
+            "type": "tab",
+            "label": "Flow 11",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "name": "gmail-send"
+}

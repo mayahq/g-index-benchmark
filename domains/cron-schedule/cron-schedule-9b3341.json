@@ -1,0 +1,64 @@
+{
+    "title": "Flow generated from path data",
+    "text": "Repeat At 00:31 AM, on day 2, 5, 15, 22, 25, 18, 11, 29, 1, and 9 of the month, only on Tuesday and Wednesday, only in February",
+    "flow": [
+        {
+            "id": "d15ed5eb.fedb1d",
+            "type": "cronplus",
+            "z": "483bd0a1.fed3d2",
+            "x": 287.078,
+            "y": 100.0,
+            "wires": [
+                [
+                    "3ac1aac8.fed55d"
+                ]
+            ],
+            "name": "",
+            "outputField": "payload",
+            "timeZone": "",
+            "persistDynamic": false,
+            "outputs": 1,
+            "options": [
+                {
+                    "name": "schedule1",
+                    "topic": "schedule1",
+                    "payloadType": "default",
+                    "payload": "",
+                    "expressionType": "cron",
+                    "expression": "31 0 2,5,15,22,25,18,11,29,1,9 2 2,3",
+                    "location": "",
+                    "offset": "0",
+                    "solarType": "all",
+                    "solarEvents": "sunrise,sunset"
+                }
+            ],
+            "module": "node-red-contrib-cron-plus"
+        },
+        {
+            "id": "3ac1aac8.fed55d",
+            "type": "debug",
+            "z": "483bd0a1.fed3d2",
+            "x": 712.922,
+            "y": 900.0,
+            "wires": [],
+            "name": "",
+            "active": true,
+            "tosidebar": true,
+            "console": false,
+            "tostatus": false,
+            "complete": "payload",
+            "module": "node-red",
+            "statusVal": "",
+            "statusType": "auto"
+        },
+        {
+            "id": "483bd0a1.fed3d2",
+            "type": "tab",
+            "label": "Flow 2",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "name": "cron-schedule"
+}

@@ -1,0 +1,152 @@
+{
+    "title": "Simple Form based Template Flow",
+    "text": "Enter unit, date of birth, width, mark, details of wall, price, details of tail, and details of wing\n",
+    "flow": [
+        {
+            "id": "4698ef73.fed7d8",
+            "type": "ui_form",
+            "z": "7fc50239.fed8a8",
+            "x": 100.0,
+            "y": 266.003,
+            "wires": [
+                [
+                    "77e30c1c.fed2a3"
+                ]
+            ],
+            "group": "57657e65.fed177",
+            "name": "Form 66",
+            "label": "",
+            "order": 0,
+            "width": 0,
+            "height": 0,
+            "options": [
+                {
+                    "value": "unit",
+                    "type": "text",
+                    "label": "Unit",
+                    "required": true,
+                    "rows": null
+                },
+                {
+                    "value": "date of birth",
+                    "type": "date",
+                    "label": "Date of birth",
+                    "required": true,
+                    "rows": null
+                },
+                {
+                    "value": "width",
+                    "type": "number",
+                    "label": "Width",
+                    "required": true,
+                    "rows": null
+                },
+                {
+                    "value": "mark",
+                    "type": "number",
+                    "label": "Mark",
+                    "required": true,
+                    "rows": null
+                },
+                {
+                    "value": "Details of wall",
+                    "type": "multiline",
+                    "label": "Details of wall",
+                    "required": true,
+                    "rows": null
+                },
+                {
+                    "value": "price",
+                    "type": "number",
+                    "label": "Price",
+                    "required": true,
+                    "rows": null
+                },
+                {
+                    "value": "Details of tail",
+                    "type": "multiline",
+                    "label": "Details of tail",
+                    "required": true,
+                    "rows": null
+                },
+                {
+                    "value": "Details of wing",
+                    "type": "multiline",
+                    "label": "Details of wing",
+                    "required": true,
+                    "rows": null
+                }
+            ],
+            "formValue": {
+                "unit": "",
+                "date of birth": "",
+                "width": "",
+                "mark": "",
+                "Details of wall": "",
+                "price": "",
+                "Details of tail": "",
+                "Details of wing": ""
+            },
+            "payload": "",
+            "submit": "Submit",
+            "cancel": "Cancel",
+            "topic": "",
+            "module": "maya-red-dashboard"
+        },
+        {
+            "id": "77e30c1c.fed2a3",
+            "type": "debug",
+            "z": "7fc50239.fed8a8",
+            "x": 900.0,
+            "y": 733.997,
+            "wires": [],
+            "name": "",
+            "active": true,
+            "tosidebar": true,
+            "console": false,
+            "tostatus": false,
+            "complete": "false",
+            "module": "node-red",
+            "statusVal": "",
+            "statusType": "auto"
+        },
+        {
+            "id": "57657e65.fed177",
+            "type": "ui_group",
+            "tab": "e95caa4f.fed62b",
+            "name": "UI Group 19",
+            "order": 1,
+            "disp": true,
+            "width": "6",
+            "collapse": false,
+            "module": "maya-red-dashboard"
+        },
+        {
+            "id": "e95caa4f.fed62b",
+            "type": "ui_tab",
+            "tab": "7fc50239.fed8a8",
+            "name": "UI Tab 63",
+            "icon": "dashboard",
+            "order": 1,
+            "disabled": false,
+            "hidden": false,
+            "module": "maya-red-dashboard"
+        },
+        {
+            "id": "7fc50239.fed8a8",
+            "type": "tab",
+            "label": "Flow 105",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "nodeTypeList": [
+        "debug",
+        "ui_group",
+        "tab",
+        "ui_form",
+        "ui_tab"
+    ],
+    "name": "template-form"
+}

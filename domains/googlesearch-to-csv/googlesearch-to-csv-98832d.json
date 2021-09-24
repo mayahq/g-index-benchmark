@@ -1,0 +1,276 @@
+{
+    "title": "Flow generated from path data",
+    "text": "Search Google for downgrade snowsuit field afford luxury, scrape results and put into commerce-acquisition.csv",
+    "flow": [
+        {
+            "id": "70a47965.fedfe8",
+            "type": "inject",
+            "z": "cefaaf99.fed88b",
+            "x": 118.467,
+            "y": 494.918,
+            "wires": [
+                [
+                    "b3279fc7.fed097"
+                ]
+            ],
+            "name": "",
+            "topic": "",
+            "payload": "",
+            "payloadType": "date",
+            "repeat": "",
+            "crontab": "",
+            "once": false,
+            "onceDelay": 0.1,
+            "module": "node-red",
+            "props": [
+                {
+                    "p": "payload"
+                },
+                {
+                    "p": "topic",
+                    "vt": "str"
+                }
+            ]
+        },
+        {
+            "id": "b3279fc7.fed097",
+            "type": "change",
+            "z": "cefaaf99.fed88b",
+            "x": 152.949,
+            "y": 343.259,
+            "wires": [
+                [
+                    "29153116.fed0c9"
+                ]
+            ],
+            "name": "Set Search Terms",
+            "rules": [
+                {
+                    "t": "set",
+                    "p": "payload",
+                    "pt": "msg",
+                    "to": "[\"downgrade snowsuit field afford luxury\"]",
+                    "tot": "json"
+                }
+            ],
+            "action": "",
+            "property": "",
+            "to": "",
+            "reg": false,
+            "module": "node-red",
+            "from": ""
+        },
+        {
+            "id": "29153116.fed0c9",
+            "type": "split",
+            "z": "cefaaf99.fed88b",
+            "x": 283.463,
+            "y": 254.651,
+            "wires": [
+                [
+                    "9099d822.fed1a8"
+                ]
+            ],
+            "name": "",
+            "splt": "\\n",
+            "spltType": "str",
+            "arraySplt": 1,
+            "arraySpltType": "len",
+            "stream": false,
+            "addname": "",
+            "module": "node-red"
+        },
+        {
+            "id": "9099d822.fed1a8",
+            "type": "function",
+            "z": "cefaaf99.fed88b",
+            "x": 371.796,
+            "y": 342.462,
+            "wires": [
+                [
+                    "d6a7de32.fedbff"
+                ]
+            ],
+            "name": "Set URL",
+            "func": "msg.url = \"https://google.com/search?q=\" + encodeURI(msg.payload)\nreturn msg;",
+            "outputs": 1,
+            "noerr": 0,
+            "module": "node-red",
+            "initialize": "",
+            "finalize": ""
+        },
+        {
+            "id": "d6a7de32.fedbff",
+            "type": "maya-browser-open",
+            "z": "cefaaf99.fed88b",
+            "x": 388.823,
+            "y": 463.06,
+            "wires": [
+                [
+                    "70137a3e.fedbfb"
+                ]
+            ],
+            "isProfileConfigNode": false,
+            "session": "",
+            "url": "url",
+            "name": "",
+            "module": "maya-red-browser-automation",
+            "payloadTypeurl": "msg"
+        },
+        {
+            "id": "70137a3e.fedbfb",
+            "type": "maya-browser-query",
+            "z": "cefaaf99.fed88b",
+            "x": 478.371,
+            "y": 523.71,
+            "wires": [
+                [
+                    "124a710d.fed14f"
+                ]
+            ],
+            "options": [
+                {
+                    "key": "text",
+                    "xpath": "//*[@id=\"rso\"]/div[*]/div/div/div[1]/a/h3",
+                    "extract": "/text()"
+                },
+                {
+                    "key": "link",
+                    "xpath": "//*[@id=\"rso\"]/div[*]/div/div/div[1]/a/div/cite",
+                    "extract": "/text()"
+                },
+                {
+                    "key": "desc",
+                    "xpath": "//*[@id=\"rso\"]/div[*]/div/div/div[2]/div[1]/span",
+                    "extract": "/text()"
+                }
+            ],
+            "session": "",
+            "payloadTypeTimeout": "num",
+            "payloadTypeTabId": "msg",
+            "name": "",
+            "module": "maya-red-browser-automation",
+            "timeout": 5000,
+            "mergeOutputs": true,
+            "tabId": "tabs[0].id"
+        },
+        {
+            "id": "124a710d.fed14f",
+            "type": "maya-browser-close-tabs",
+            "z": "cefaaf99.fed88b",
+            "x": 521.594,
+            "y": 446.478,
+            "wires": [
+                [
+                    "1a16af79.fed17b"
+                ]
+            ],
+            "tabIds": "tabs",
+            "action": "Close",
+            "isProfileConfigNode": false,
+            "session": "",
+            "name": "",
+            "module": "maya-red-browser-automation",
+            "timeout": "3000",
+            "payloadTypetabIds": "msg",
+            "payloadTypetimeout": "num"
+        },
+        {
+            "id": "1a16af79.fed17b",
+            "type": "change",
+            "z": "cefaaf99.fed88b",
+            "x": 656.625,
+            "y": 541.173,
+            "wires": [
+                [
+                    "832df74e.fed0ae"
+                ]
+            ],
+            "name": "",
+            "rules": [
+                {
+                    "t": "set",
+                    "p": "payload",
+                    "pt": "msg",
+                    "to": "result",
+                    "tot": "msg"
+                }
+            ],
+            "action": "",
+            "property": "",
+            "to": "",
+            "reg": false,
+            "module": "node-red",
+            "from": ""
+        },
+        {
+            "id": "832df74e.fed0ae",
+            "type": "csv",
+            "z": "cefaaf99.fed88b",
+            "x": 752.457,
+            "y": 582.621,
+            "wires": [
+                [
+                    "cbf27dc1.fed51b"
+                ]
+            ],
+            "name": "Create CSV",
+            "sep": ",",
+            "hdrin": "",
+            "hdrout": "none",
+            "multi": "one",
+            "ret": "\\n",
+            "temp": "text, link, desc",
+            "skip": "0",
+            "strings": true,
+            "module": "node-red",
+            "include_empty_strings": "",
+            "include_null_values": ""
+        },
+        {
+            "id": "cbf27dc1.fed51b",
+            "type": "file",
+            "z": "cefaaf99.fed88b",
+            "x": 900.0,
+            "y": 704.596,
+            "wires": [
+                [
+                    "1d8bc328.fedd69"
+                ]
+            ],
+            "name": "Write CSV",
+            "filename": "commerce-acquisition.csv",
+            "appendNewline": true,
+            "createDir": false,
+            "overwriteFile": "true",
+            "encoding": "none",
+            "module": "node-red"
+        },
+        {
+            "id": "1d8bc328.fedd69",
+            "type": "debug",
+            "z": "cefaaf99.fed88b",
+            "x": 875.454,
+            "y": 803.073,
+            "wires": [],
+            "name": "",
+            "active": true,
+            "tosidebar": true,
+            "console": false,
+            "tostatus": false,
+            "complete": "false",
+            "module": "node-red",
+            "statusVal": "",
+            "statusType": "auto"
+        },
+        {
+            "id": "cefaaf99.fed88b",
+            "type": "tab",
+            "label": "Flow 57",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "name": "googlesearch-to-csv"
+}

@@ -1,0 +1,146 @@
+{
+    "title": "Flow generated from path data",
+    "text": "Reply 'skullcap fatigues interest gavel jittery norm alive hallowed' to 'shred early tactile', and 'alligator captor imitation', to 'retrospectivity mug transcribe nectar roar aboard' on Facebook",
+    "flow": [
+        {
+            "id": "4020aa00.fedc3f",
+            "type": "chatbot-facebook-receive",
+            "z": "342e3e7a.fed719",
+            "x": 590.658,
+            "y": 347.942,
+            "wires": [
+                [
+                    "1c62bef7.fed66f"
+                ]
+            ],
+            "bot": "015a770d.fed13e",
+            "botProduction": "015a770d.fed13e",
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "1c62bef7.fed66f",
+            "type": "switch",
+            "z": "342e3e7a.fed719",
+            "x": 531.393,
+            "y": 484.159,
+            "wires": [
+                [
+                    "3d404fd8.fed086"
+                ],
+                [
+                    "c0079044.fed982"
+                ]
+            ],
+            "name": "",
+            "outputs": 2,
+            "rules": [
+                {
+                    "t": "eq",
+                    "v": "retrospectivity mug transcribe nectar roar aboard",
+                    "vt": "str"
+                },
+                {
+                    "t": "eq",
+                    "v": "shred early tactile",
+                    "vt": "str"
+                }
+            ],
+            "checkall": "false",
+            "repair": false,
+            "property": "payload.content",
+            "propertyType": "msg",
+            "module": "node-red"
+        },
+        {
+            "id": "c0079044.fed982",
+            "type": "chatbot-message",
+            "z": "342e3e7a.fed719",
+            "x": 290.009,
+            "y": 396.245,
+            "wires": [
+                [
+                    "4a21023a.fed2a1"
+                ]
+            ],
+            "name": "Reply 2",
+            "message": [
+                {
+                    "message": "alligator captor imitation"
+                }
+            ],
+            "language": "en",
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "3d404fd8.fed086",
+            "type": "chatbot-message",
+            "z": "342e3e7a.fed719",
+            "x": 759.298,
+            "y": 594.88,
+            "wires": [
+                [
+                    "29ebcebd.fed6c2"
+                ]
+            ],
+            "name": "Reply 2",
+            "message": [
+                {
+                    "message": "skullcap fatigues interest gavel jittery norm alive hallowed"
+                }
+            ],
+            "language": "en",
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "29ebcebd.fed6c2",
+            "type": "chatbot-facebook-send",
+            "z": "342e3e7a.fed719",
+            "x": 728.643,
+            "y": 752.427,
+            "wires": [],
+            "bot": "015a770d.fed13e",
+            "botProduction": "015a770d.fed13e",
+            "track": false,
+            "passThrough": false,
+            "errorOutput": false,
+            "outputs": 0,
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "4a21023a.fed2a1",
+            "type": "chatbot-facebook-send",
+            "z": "342e3e7a.fed719",
+            "x": 100.0,
+            "y": 424.347,
+            "wires": [],
+            "bot": "015a770d.fed13e",
+            "botProduction": "015a770d.fed13e",
+            "track": false,
+            "passThrough": false,
+            "errorOutput": false,
+            "outputs": 0,
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "015a770d.fed13e",
+            "type": "chatbot-facebook-node",
+            "botname": "",
+            "usernames": "",
+            "store": "",
+            "log": "",
+            "debug": false,
+            "multiWebHook": false,
+            "profileFields": "first_name,last_name",
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "342e3e7a.fed719",
+            "type": "tab",
+            "label": "Flow 98",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "name": "facebook"
+}

@@ -1,0 +1,69 @@
+{
+    "title": "Flow generated from path data",
+    "text": "pull tweets about the topic #surrounds",
+    "flow": [
+        {
+            "id": "40eb7a72.fed008",
+            "type": "twitter in",
+            "z": "a3465ed2.fedc29",
+            "x": 131.718,
+            "y": 308.448,
+            "wires": [
+                [
+                    "32b5b126.fed0f9"
+                ]
+            ],
+            "tags": "#surrounds",
+            "twitter": "",
+            "user": "false",
+            "name": "",
+            "inputs": 1,
+            "module": "node-red-node-twitter"
+        },
+        {
+            "id": "32b5b126.fed0f9",
+            "type": "function",
+            "z": "a3465ed2.fedc29",
+            "x": 468.282,
+            "y": 513.346,
+            "wires": [
+                [
+                    "cbb5d284.fedfa1"
+                ]
+            ],
+            "name": "Func#30",
+            "func": "\nreturn msg;",
+            "outputs": 1,
+            "noerr": 0,
+            "module": "node-red",
+            "initialize": "",
+            "finalize": ""
+        },
+        {
+            "id": "cbb5d284.fedfa1",
+            "type": "debug",
+            "z": "a3465ed2.fedc29",
+            "x": 900.0,
+            "y": 678.205,
+            "wires": [],
+            "name": "",
+            "active": true,
+            "tosidebar": true,
+            "console": false,
+            "tostatus": false,
+            "complete": "false",
+            "module": "node-red",
+            "statusVal": "",
+            "statusType": "auto"
+        },
+        {
+            "id": "a3465ed2.fedc29",
+            "type": "tab",
+            "label": "Flow 216",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "name": "twitter"
+}

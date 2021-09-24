@@ -1,0 +1,191 @@
+{
+    "title": "Flow generated from path data",
+    "text": "On Telegram, when user says 'still singular ambitious', reply with 'quadrant implementation anger righteous objective gelding price', when user says 'qualification fertilizer category tomato popcorn optimisation faucet bookend', reply with 'floozie student cheesecake subprime scribble', and when user says 'bathtub center conservation kneel carrot' reply with 'idiot systemize subsidiary rainstorm cereal encyclopedia'",
+    "flow": [
+        {
+            "id": "04473025.fedf65",
+            "type": "chatbot-telegram-receive",
+            "z": "21c10913.fed1ec",
+            "x": 579.963,
+            "y": 438.963,
+            "wires": [
+                [
+                    "00c9bcea.fed469"
+                ]
+            ],
+            "bot": "e2e8d3c6.fedb64",
+            "botProduction": "e2e8d3c6.fedb64",
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "00c9bcea.fed469",
+            "type": "switch",
+            "z": "21c10913.fed1ec",
+            "x": 524.848,
+            "y": 473.306,
+            "wires": [
+                [
+                    "2e1539b2.fed87b"
+                ],
+                [
+                    "1b5edf95.fed655"
+                ],
+                [
+                    "57faeef0.fed2e0"
+                ]
+            ],
+            "name": "",
+            "outputs": 3,
+            "rules": [
+                {
+                    "t": "eq",
+                    "v": "bathtub center conservation kneel carrot",
+                    "vt": "str"
+                },
+                {
+                    "t": "eq",
+                    "v": "qualification fertilizer category tomato popcorn optimisation faucet bookend",
+                    "vt": "str"
+                },
+                {
+                    "t": "eq",
+                    "v": "still singular ambitious",
+                    "vt": "str"
+                }
+            ],
+            "checkall": "false",
+            "repair": false,
+            "property": "payload.content",
+            "propertyType": "msg",
+            "module": "node-red"
+        },
+        {
+            "id": "57faeef0.fed2e0",
+            "type": "chatbot-message",
+            "z": "21c10913.fed1ec",
+            "x": 383.496,
+            "y": 104.63,
+            "wires": [
+                [
+                    "c56f118f.fed98c"
+                ]
+            ],
+            "name": "Reply 2",
+            "message": [
+                {
+                    "message": "idiot systemize subsidiary rainstorm cereal encyclopedia"
+                }
+            ],
+            "language": "en",
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "1b5edf95.fed655",
+            "type": "chatbot-message",
+            "z": "21c10913.fed1ec",
+            "x": 811.903,
+            "y": 746.574,
+            "wires": [
+                [
+                    "bcc9acb0.fed405"
+                ]
+            ],
+            "name": "Reply 2",
+            "message": [
+                {
+                    "message": "floozie student cheesecake subprime scribble"
+                }
+            ],
+            "language": "en",
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "2e1539b2.fed87b",
+            "type": "chatbot-message",
+            "z": "21c10913.fed1ec",
+            "x": 307.523,
+            "y": 614.499,
+            "wires": [
+                [
+                    "7024f0f7.fedfc7"
+                ]
+            ],
+            "name": "Reply 2",
+            "message": [
+                {
+                    "message": "quadrant implementation anger righteous objective gelding price"
+                }
+            ],
+            "language": "en",
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "7024f0f7.fedfc7",
+            "type": "chatbot-telegram-send",
+            "z": "21c10913.fed1ec",
+            "x": 234.266,
+            "y": 666.635,
+            "wires": [],
+            "bot": "e2e8d3c6.fedb64",
+            "botProduction": "e2e8d3c6.fedb64",
+            "track": false,
+            "passThrough": false,
+            "errorOutput": false,
+            "outputs": 0,
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "c56f118f.fed98c",
+            "type": "chatbot-telegram-send",
+            "z": "21c10913.fed1ec",
+            "x": 307.029,
+            "y": 100.0,
+            "wires": [],
+            "bot": "e2e8d3c6.fedb64",
+            "botProduction": "e2e8d3c6.fedb64",
+            "track": false,
+            "passThrough": false,
+            "errorOutput": false,
+            "outputs": 0,
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "bcc9acb0.fed405",
+            "type": "chatbot-telegram-send",
+            "z": "21c10913.fed1ec",
+            "x": 850.973,
+            "y": 855.392,
+            "wires": [],
+            "bot": "e2e8d3c6.fedb64",
+            "botProduction": "e2e8d3c6.fedb64",
+            "track": false,
+            "passThrough": false,
+            "errorOutput": false,
+            "outputs": 0,
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "e2e8d3c6.fedb64",
+            "type": "chatbot-telegram-node",
+            "botname": "",
+            "usernames": "",
+            "providerToken": "",
+            "polling": "1000",
+            "store": "",
+            "log": "",
+            "debug": true,
+            "webHook": "",
+            "connectMode": "polling",
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "21c10913.fed1ec",
+            "type": "tab",
+            "label": "Flow 115",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "name": "telegram-3-reply"
+}

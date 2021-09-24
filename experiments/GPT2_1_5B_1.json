@@ -1,0 +1,262 @@
+{
+    "model": {
+        "name": "GPT2",
+        "type": "transformer",
+        "train_params": {
+            "model_name": "gpt2-xl"
+        }
+    },
+    "train_set": {
+        "data": [
+            {
+                "name": "cron-reminder",
+                "num_samples": 320
+            },
+            {
+                "name": "cron-schedule",
+                "num_samples": 320
+            },
+            {
+                "name": "facebook",
+                "num_samples": 320
+            },
+            {
+                "name": "gmail-send",
+                "num_samples": 320
+            },
+            {
+                "name": "google-search",
+                "num_samples": 320
+            },
+            {
+                "name": "googlesearch-to-csv",
+                "num_samples": 320
+            },
+            {
+                "name": "http",
+                "num_samples": 320
+            },
+            {
+                "name": "telegram-2-reply",
+                "num_samples": 320
+            },
+            {
+                "name": "telegram-3-reply",
+                "num_samples": 320
+            },
+            {
+                "name": "twitter",
+                "num_samples": 320
+            },
+            {
+                "name": "url-skill",
+                "num_samples": 320
+            },
+            {
+                "name": "youtube-pause",
+                "num_samples": 320
+            },
+            {
+                "name": "youtube-play",
+                "num_samples": 320
+            },
+            {
+                "name": "youtube-resume",
+                "num_samples": 320
+            },
+            {
+                "name": "template-slider",
+                "num_samples": 320
+            },
+            {
+                "name": "template-form",
+                "num_samples": 320
+            }
+        ],
+        "total": 5120
+    },
+    "test_set": {
+        "data": [
+            {
+                "name": "cron-reminder",
+                "num_samples": 5
+            },
+            {
+                "name": "cron-schedule",
+                "num_samples": 5
+            },
+            {
+                "name": "facebook",
+                "num_samples": 5
+            },
+            {
+                "name": "gmail-send",
+                "num_samples": 5
+            },
+            {
+                "name": "google-search",
+                "num_samples": 5
+            },
+            {
+                "name": "googlesearch-to-csv",
+                "num_samples": 5
+            },
+            {
+                "name": "http",
+                "num_samples": 5
+            },
+            {
+                "name": "telegram-2-reply",
+                "num_samples": 5
+            },
+            {
+                "name": "telegram-3-reply",
+                "num_samples": 5
+            },
+            {
+                "name": "twitter",
+                "num_samples": 5
+            },
+            {
+                "name": "url-skill",
+                "num_samples": 5
+            },
+            {
+                "name": "youtube-pause",
+                "num_samples": 5
+            },
+            {
+                "name": "youtube-play",
+                "num_samples": 5
+            },
+            {
+                "name": "youtube-resume",
+                "num_samples": 5
+            },
+            {
+                "name": "template-slider",
+                "num_samples": 5
+            },
+            {
+                "name": "template-form",
+                "num_samples": 5
+            }
+        ],
+        "total": 80
+    },
+    "train_cost":  {
+        "time": 22752.2174,
+        "compute": 5927.40
+    },
+    "test_cost": {
+        "time": 1224.460336,
+        "compute": 79.75
+    },
+    "performance": {
+        "divergence": 0.2923978770635629,
+        "perfects": 0.4625,
+        "domains": [
+            {
+                "name": "cron-reminder",
+                "num_samples": 5,
+                "divergence": 0.10385487528344665,
+                "perfects": 0.4
+            },
+            {
+                "name": "cron-schedule",
+                "num_samples": 5,
+                "divergence": 0.35102040816326524,
+                "perfects": 0.2
+            },
+            {
+                "name": "facebook",
+                "num_samples": 5,
+                "divergence": 0.039999999999999994,
+                "perfects": 0.8
+            },
+            {
+                "name": "gmail-send",
+                "num_samples": 5,
+                "divergence": 0.8166666666666667,
+                "perfects": 0.0
+            },
+            {
+                "name": "google-search",
+                "num_samples": 5,
+                "divergence": 0.4444444444444445,
+                "perfects": 0.0
+            },
+            {
+                "name": "googlesearch-to-csv",
+                "num_samples": 5,
+                "divergence": 0.9166666666666666,
+                "perfects": 0.0
+            },
+            {
+                "name": "http",
+                "num_samples": 5,
+                "divergence": 0.39768518518518514,
+                "perfects": 0.0
+            },
+            {
+                "name": "telegram-2-reply",
+                "num_samples": 5,
+                "divergence": 0.039999999999999994,
+                "perfects": 0.8
+            },
+            {
+                "name": "telegram-3-reply",
+                "num_samples": 5,
+                "divergence": 0.11887499999999998,
+                "perfects": 0.6
+            },
+            {
+                "name": "twitter",
+                "num_samples": 5,
+                "divergence": 0.2,
+                "perfects": 0.8
+            },
+            {
+                "name": "url-skill",
+                "num_samples": 5,
+                "divergence": 0.2,
+                "perfects": 0.8
+            },
+            {
+                "name": "youtube-pause",
+                "num_samples": 5,
+                "divergence": 0.0,
+                "perfects": 1.0
+            },
+            {
+                "name": "youtube-play",
+                "num_samples": 5,
+                "divergence": 0.7333333333333334,
+                "perfects": 0.0
+            },
+            {
+                "name": "youtube-resume",
+                "num_samples": 5,
+                "divergence": 0.0,
+                "perfects": 1.0
+            },
+            {
+                "name": "template-slider",
+                "num_samples": 5,
+                "divergence": 0.06153846153846154,
+                "perfects": 0.6
+            },
+            {
+                "name": "template-form",
+                "num_samples": 5,
+                "divergence": 0.2542809917355372,
+                "perfects": 0.4
+            }
+        ]
+    },
+    "domain_distance": 0.08759094576556023,
+    "input": "text",
+    "output": "JSON",
+    "environment": {},
+    "complete": true
+}

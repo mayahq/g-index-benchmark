@@ -1,0 +1,63 @@
+{
+    "title": "Flow generated from path data",
+    "text": "Create a HTTP HEAD endpoint called knee-screamer-succeed-chorus-economic",
+    "flow": [
+        {
+            "id": "66a7a9f5.fedfca",
+            "type": "http in",
+            "z": "e639f2b2.fedcc0",
+            "x": 500.0,
+            "y": 500.0,
+            "wires": [
+                [
+                    "8b53ef32.fed55b",
+                    "c7749f4c.fedcb7"
+                ]
+            ],
+            "name": "",
+            "url": "localhost:3000/knee-screamer-succeed-chorus-economic",
+            "method": "HEAD",
+            "upload": false,
+            "swaggerDoc": "",
+            "module": "node-red"
+        },
+        {
+            "id": "8b53ef32.fed55b",
+            "type": "http response",
+            "z": "e639f2b2.fedcc0",
+            "x": 384.881,
+            "y": 900.0,
+            "wires": [],
+            "name": "",
+            "statusCode": "",
+            "headers": {},
+            "module": "node-red"
+        },
+        {
+            "id": "c7749f4c.fedcb7",
+            "type": "debug",
+            "z": "e639f2b2.fedcc0",
+            "x": 615.119,
+            "y": 100.0,
+            "wires": [],
+            "name": "",
+            "active": true,
+            "tosidebar": true,
+            "console": false,
+            "tostatus": false,
+            "complete": "false",
+            "module": "node-red",
+            "statusVal": "",
+            "statusType": "auto"
+        },
+        {
+            "id": "e639f2b2.fedcc0",
+            "type": "tab",
+            "label": "Flow 142",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "name": "http"
+}

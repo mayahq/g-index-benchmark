@@ -1,0 +1,69 @@
+{
+    "title": "Flow generated from path data",
+    "text": "scrape tweets about the topic #chronometer",
+    "flow": [
+        {
+            "id": "2a31d7eb.fedc66",
+            "type": "twitter in",
+            "z": "8c68ecda.fede61",
+            "x": 100.0,
+            "y": 531.247,
+            "wires": [
+                [
+                    "5bf14191.fedd86"
+                ]
+            ],
+            "tags": "#chronometer",
+            "twitter": "",
+            "user": "false",
+            "name": "",
+            "inputs": 1,
+            "module": "node-red-node-twitter"
+        },
+        {
+            "id": "5bf14191.fedd86",
+            "type": "function",
+            "z": "8c68ecda.fede61",
+            "x": 513.949,
+            "y": 303.947,
+            "wires": [
+                [
+                    "fae2b33d.fed485"
+                ]
+            ],
+            "name": "Func#30",
+            "func": "\nreturn msg;",
+            "outputs": 1,
+            "noerr": 0,
+            "module": "node-red",
+            "initialize": "",
+            "finalize": ""
+        },
+        {
+            "id": "fae2b33d.fed485",
+            "type": "debug",
+            "z": "8c68ecda.fede61",
+            "x": 886.051,
+            "y": 664.806,
+            "wires": [],
+            "name": "",
+            "active": true,
+            "tosidebar": true,
+            "console": false,
+            "tostatus": false,
+            "complete": "false",
+            "module": "node-red",
+            "statusVal": "",
+            "statusType": "auto"
+        },
+        {
+            "id": "8c68ecda.fede61",
+            "type": "tab",
+            "label": "Flow 51",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "name": "twitter"
+}

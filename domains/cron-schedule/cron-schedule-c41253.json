@@ -1,0 +1,64 @@
+{
+    "title": "Flow generated from path data",
+    "text": "Repeat Every 25 minutes, starting at 26 minutes past the hour, between 08:00 AM and 11:59 AM, every 3 days, starting on day 30 of the month, only on Wednesday, Sunday, Friday, and Tuesday, only in March",
+    "flow": [
+        {
+            "id": "f2061bf7.fed50a",
+            "type": "cronplus",
+            "z": "114ec516.feddc2",
+            "x": 484.464,
+            "y": 900.0,
+            "wires": [
+                [
+                    "9e49b3c3.fedaae"
+                ]
+            ],
+            "name": "",
+            "outputField": "payload",
+            "timeZone": "",
+            "persistDynamic": false,
+            "outputs": 1,
+            "options": [
+                {
+                    "name": "schedule1",
+                    "topic": "schedule1",
+                    "payloadType": "default",
+                    "payload": "",
+                    "expressionType": "cron",
+                    "expression": "26/25 8-11 30/3 3 3,0,5,2",
+                    "location": "",
+                    "offset": "0",
+                    "solarType": "all",
+                    "solarEvents": "sunrise,sunset"
+                }
+            ],
+            "module": "node-red-contrib-cron-plus"
+        },
+        {
+            "id": "9e49b3c3.fedaae",
+            "type": "debug",
+            "z": "114ec516.feddc2",
+            "x": 515.536,
+            "y": 100.0,
+            "wires": [],
+            "name": "",
+            "active": true,
+            "tosidebar": true,
+            "console": false,
+            "tostatus": false,
+            "complete": "payload",
+            "module": "node-red",
+            "statusVal": "",
+            "statusType": "auto"
+        },
+        {
+            "id": "114ec516.feddc2",
+            "type": "tab",
+            "label": "Flow 14",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "name": "cron-schedule"
+}

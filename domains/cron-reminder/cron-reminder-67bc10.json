@@ -1,0 +1,63 @@
+{
+    "title": "Flow generated from path data",
+    "text": "Set a reminder for 'meander dreamer breed hedgehog' Minutes 43 through 53 past the hour, between 08:00 AM and 10:59 PM, on day 29, 28, 26, 15, 2, 22, and 30 of the month, every 5 days of the week, Wednesday through Saturday, February through August",
+    "flow": [
+        {
+            "id": "ada9ea9c.fedea9",
+            "type": "cronplus",
+            "z": "bfd8f26d.feddff",
+            "x": 637.563,
+            "y": 100.0,
+            "wires": [
+                [
+                    "c0a62478.fedcfb"
+                ]
+            ],
+            "name": "",
+            "outputField": "payload",
+            "timeZone": "",
+            "persistDynamic": false,
+            "outputs": 1,
+            "options": [
+                {
+                    "name": "schedule",
+                    "topic": "meander dreamer breed hedgehog",
+                    "payloadType": "default",
+                    "payload": "",
+                    "expressionType": "cron",
+                    "expression": "43-53 8-22 29,28,26,15,2,22,30 2-8 3/5",
+                    "location": "",
+                    "offset": "0",
+                    "solarType": "all",
+                    "solarEvents": "sunrise,sunset"
+                }
+            ],
+            "module": "node-red-contrib-cron-plus"
+        },
+        {
+            "id": "c0a62478.fedcfb",
+            "type": "desktop-system-notify",
+            "z": "bfd8f26d.feddff",
+            "x": 362.437,
+            "y": 900.0,
+            "wires": [],
+            "title": "Reminder",
+            "messageType": "msg",
+            "sound": false,
+            "name": "Set Reminder",
+            "module": "maya-red-system-utils",
+            "wait": true,
+            "titleType": "str",
+            "message": "topic"
+        },
+        {
+            "id": "bfd8f26d.feddff",
+            "type": "tab",
+            "label": "Flow 155",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "name": "cron-reminder"
+}

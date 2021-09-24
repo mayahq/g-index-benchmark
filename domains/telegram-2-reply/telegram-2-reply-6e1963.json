@@ -1,0 +1,148 @@
+{
+    "title": "Flow generated from path data",
+    "text": "On Telegram, when user says 'register thirst overcome', reply with 'comedy faith smog merchandise shade movie interchange indicator', and when user says 'preoccupation meteor upgrade hollow', reply with 'wheel machine fav creator persuade receive overflight'",
+    "flow": [
+        {
+            "id": "8735254e.fedf0e",
+            "type": "chatbot-telegram-receive",
+            "z": "d8b5a3d7.fed9fe",
+            "x": 470.255,
+            "y": 439.481,
+            "wires": [
+                [
+                    "fbf1b011.fed27a"
+                ]
+            ],
+            "bot": "8c905f4d.fed710",
+            "botProduction": "8c905f4d.fed710",
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "fbf1b011.fed27a",
+            "type": "switch",
+            "z": "d8b5a3d7.fed9fe",
+            "x": 538.882,
+            "y": 498.899,
+            "wires": [
+                [
+                    "2a7623b2.fed329"
+                ],
+                [
+                    "68cba66a.fed74c"
+                ]
+            ],
+            "name": "",
+            "outputs": 2,
+            "rules": [
+                {
+                    "t": "eq",
+                    "v": "preoccupation meteor upgrade hollow",
+                    "vt": "str"
+                },
+                {
+                    "t": "eq",
+                    "v": "register thirst overcome",
+                    "vt": "str"
+                }
+            ],
+            "checkall": "false",
+            "repair": false,
+            "property": "payload.content",
+            "propertyType": "msg",
+            "module": "node-red"
+        },
+        {
+            "id": "68cba66a.fed74c",
+            "type": "chatbot-message",
+            "z": "d8b5a3d7.fed9fe",
+            "x": 214.664,
+            "y": 800.476,
+            "wires": [
+                [
+                    "b27653b0.fed7dc"
+                ]
+            ],
+            "name": "Reply 2",
+            "message": [
+                {
+                    "message": "wheel machine fav creator persuade receive overflight"
+                }
+            ],
+            "language": "en",
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "2a7623b2.fed329",
+            "type": "chatbot-message",
+            "z": "d8b5a3d7.fed9fe",
+            "x": 851.932,
+            "y": 187.788,
+            "wires": [
+                [
+                    "44a950b7.fed971"
+                ]
+            ],
+            "name": "Reply 2",
+            "message": [
+                {
+                    "message": "comedy faith smog merchandise shade movie interchange indicator"
+                }
+            ],
+            "language": "en",
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "44a950b7.fed971",
+            "type": "chatbot-telegram-send",
+            "z": "d8b5a3d7.fed9fe",
+            "x": 824.267,
+            "y": 289.71,
+            "wires": [],
+            "bot": "8c905f4d.fed710",
+            "botProduction": "8c905f4d.fed710",
+            "track": false,
+            "passThrough": false,
+            "errorOutput": false,
+            "outputs": 0,
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "b27653b0.fed7dc",
+            "type": "chatbot-telegram-send",
+            "z": "d8b5a3d7.fed9fe",
+            "x": 100.0,
+            "y": 783.646,
+            "wires": [],
+            "bot": "8c905f4d.fed710",
+            "botProduction": "8c905f4d.fed710",
+            "track": false,
+            "passThrough": false,
+            "errorOutput": false,
+            "outputs": 0,
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "8c905f4d.fed710",
+            "type": "chatbot-telegram-node",
+            "botname": "",
+            "usernames": "",
+            "providerToken": "",
+            "polling": "1000",
+            "store": "",
+            "log": "",
+            "debug": true,
+            "webHook": "",
+            "connectMode": "polling",
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "d8b5a3d7.fed9fe",
+            "type": "tab",
+            "label": "Flow 67",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "name": "telegram-2-reply"
+}
