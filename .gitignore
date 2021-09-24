@@ -167,8 +167,8 @@ env.list
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-ExperimentRecords/
-experimentation/gpt-2-hf/
+
 .ipynb_checkpoint
-templates/
+domains/
 experiments/
+results/
