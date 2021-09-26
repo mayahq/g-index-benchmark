@@ -148,3 +148,11 @@ def random_row_mean(multilevel_dict: Dict[str, Dict[str, float]]) -> float:
         np.random.choice(list(multilevel_dict.keys()))
     ).values()
     return np.mean(list(random_row))
+
+def count_files(directory,ext=".json"):
+    count = 0
+    for _, _, files in os.walk(directory):
+        for file in files:
+            if file.endswith(ext):
+                count+=1
+    return count

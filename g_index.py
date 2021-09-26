@@ -1,5 +1,7 @@
+import glob
 import json
 import os
+from argparse import ArgumentParser
 from collections import defaultdict
 from dataclasses import asdict, dataclass, field
 from statistics import mean
@@ -11,7 +13,7 @@ import pandas as pd
 import seaborn as sns
 
 from utils import (AVAILABLE_DOMAINS, DOMAIN_ROOT, cache_dd, calculate_dd,
-                   get_domain_lengths, print_dataclass)
+                   get_domain_lengths, print_dataclass,count_files)
 
 DOMAIN_LENGTHS = get_domain_lengths(AVAILABLE_DOMAINS)
 
@@ -292,3 +294,60 @@ class Experiment:
             return asdict(sim_indices)
 
         return sim_indices.GIndex
+
+
+if __name__=='__main__':
+    parser = ArgumentParser(description="CLI to calculate & compare g-index across experiments")
+    parser.add_argument("-e","--exp_dir",required=True,help="Name of the directory where experiment files are stored",default='experiments')
+    parser.add_argument("-d","--domain_dir",required=True,help="Name of the directory where domain files are stored",default='domains')
+    parser.add_argument("-s","--save_results",required=False,default=True,help="Whether to save the results to a file")
+    parser.add_argument("-p","--print_results",required=False,default=False,help="Whether to print the results.")
+
+    args = parser.parse_args()
+    if os.path.isdir(args.exp_dir):
+        exp_files = glob.glob(args.exp_dir+ "/*.json")
+        if not len(exp_files):
+            print("No files found in the given experiment directory, exiting...")
+            raise FileNotFoundError
+    else:
+        print("Experiment directory doesn't exist, Please enter a correct directory")
+        raise NotADirectoryError
+
+    if os.path.isdir(args.domain_dir):
+        n_files = count_files(args.domain_dir)
+        if n_files ==0:
+            print("No files found in the given domain directory, exiting...")
+            raise FileNotFoundError
+    else:
+        print("DOmain directory doesn't exist, Please enter a correct directory")
+        raise NotADirectoryError
+    
+    try:
+        result = {"IS":[],"TotalCurriculaDomain":[],"Compute":[],"AvgPTheta":[],"g_index":[]}
+        for exp_file in exp_files:
+            
+            exp = Experiment(exp_file)
+            exp_c = exp.get_exp_components(return_raw_experience=True)
+            IS = exp_c.IS
+            TotalCurriculaDomain = sum( [ domain["num_samples"] for domain in exp_c.CurriculaDomains])
+            Compute = exp_c.E
+            AvgPTheta = exp_c.AveragePerformance
+            g_index = exp.calculate_g_index()
+            result["IS"].append(IS)
+            result["TotalCurriculaDomain"].append(TotalCurriculaDomain)
+            result["Compute"].append(Compute)
+            result["AvgPTheta"].append(AvgPTheta)
+            result["g_index"].append(g_index)
+
+        result_df = pd.DataFrame(result)
+        result_df = result_df.sort_values(by="g_index",ascending=False)
+        print(result_df.to_markdown(index=False))
+    except Exception as e:
+        print(e)
+
+            
+
+
+            
+
+
