@@ -22,7 +22,7 @@
 
 ## <a name='Introduction'></a>Introduction
 
-This repository contains the code to measure `g-index` for an experiment as described in the [paper](https://arxiv.org/abs/2109.12075)
+This repository contains the code to measure `g-index` for an experiment as described in the [paper](https://arxiv.org/abs/2109.12075). It let's you calculate the `g-index` for any model experiment, and simulate the responsiveness of the `g-index` to various factors like number of training samples, compute and performance.
 
 ## <a name='RepositoryStructure'></a>Repository Structure 
 
@@ -37,7 +37,7 @@ This repository contains the code to measure `g-index` for an experiment as desc
 
 ## <a name='Usage'></a>Usage 
 ### NOTE: 
-Some of the package requirements fail to get install on <em>Arm based M1 macs</em>, please use binder/colab to launch the notebooks.
+Some of the package requirements fail to get installed on <em>Arm-based M1 macs</em>, please use binder/colab to launch the notebooks.
 ### <a name='Setup'></a>Setup 
 1. Create a conda environment from the provided `env.yml` with the following command
 
