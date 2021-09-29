@@ -14,7 +14,7 @@ import pandas as pd
 import seaborn as sns
 
 from utils import (AVAILABLE_DOMAINS, DOMAIN_ROOT, cache_dd, calculate_dd,
-                   get_domain_lengths, print_dataclass)
+                   get_domain_lengths, print_dataclass,count_files)
 
 DOMAIN_LENGTHS = get_domain_lengths(AVAILABLE_DOMAINS)
 
