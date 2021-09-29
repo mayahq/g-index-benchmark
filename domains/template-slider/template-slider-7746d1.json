@@ -1,0 +1,217 @@
+{
+    "title": "Simple Slider Template Flow",
+    "text": "This flow contains 6 sliders with values ranging from 60 to 95 changing in steps of five",
+    "flow": [
+        {
+            "id": "f3861e11.fed9ce",
+            "type": "ui_slider",
+            "z": "f49e43d0.fedfc9",
+            "x": 876.293,
+            "y": 595.058,
+            "wires": [
+                [
+                    "4e0f75f2.fed708"
+                ]
+            ],
+            "group": "7fe98f5e.fed289",
+            "name": "",
+            "label": "Slider 0",
+            "tooltip": "",
+            "order": 0,
+            "width": 0,
+            "height": 0,
+            "passthru": true,
+            "outs": "all",
+            "topic": "",
+            "min": 60.0,
+            "max": 95.0,
+            "step": 5.0,
+            "module": "maya-red-dashboard"
+        },
+        {
+            "id": "fe0a2690.fedc63",
+            "type": "ui_slider",
+            "z": "f49e43d0.fedfc9",
+            "x": 137.366,
+            "y": 390.196,
+            "wires": [
+                [
+                    "4e0f75f2.fed708"
+                ]
+            ],
+            "group": "7fe98f5e.fed289",
+            "name": "",
+            "label": "Slider 1",
+            "tooltip": "",
+            "order": 0,
+            "width": 0,
+            "height": 0,
+            "passthru": true,
+            "outs": "all",
+            "topic": "",
+            "min": 60.0,
+            "max": 95.0,
+            "step": 5.0,
+            "module": "maya-red-dashboard"
+        },
+        {
+            "id": "8fb9612a.fed90f",
+            "type": "ui_slider",
+            "z": "f49e43d0.fedfc9",
+            "x": 388.714,
+            "y": 438.425,
+            "wires": [
+                [
+                    "4e0f75f2.fed708"
+                ]
+            ],
+            "group": "7fe98f5e.fed289",
+            "name": "",
+            "label": "Slider 2",
+            "tooltip": "",
+            "order": 0,
+            "width": 0,
+            "height": 0,
+            "passthru": true,
+            "outs": "all",
+            "topic": "",
+            "min": 60.0,
+            "max": 95.0,
+            "step": 5.0,
+            "module": "maya-red-dashboard"
+        },
+        {
+            "id": "c857da19.fed737",
+            "type": "ui_slider",
+            "z": "f49e43d0.fedfc9",
+            "x": 697.778,
+            "y": 486.198,
+            "wires": [
+                [
+                    "4e0f75f2.fed708"
+                ]
+            ],
+            "group": "7fe98f5e.fed289",
+            "name": "",
+            "label": "Slider 3",
+            "tooltip": "",
+            "order": 0,
+            "width": 0,
+            "height": 0,
+            "passthru": true,
+            "outs": "all",
+            "topic": "",
+            "min": 60.0,
+            "max": 95.0,
+            "step": 5.0,
+            "module": "maya-red-dashboard"
+        },
+        {
+            "id": "b318ca79.fed912",
+            "type": "ui_slider",
+            "z": "f49e43d0.fedfc9",
+            "x": 276.833,
+            "y": 716.826,
+            "wires": [
+                [
+                    "4e0f75f2.fed708"
+                ]
+            ],
+            "group": "7fe98f5e.fed289",
+            "name": "",
+            "label": "Slider 4",
+            "tooltip": "",
+            "order": 0,
+            "width": 0,
+            "height": 0,
+            "passthru": true,
+            "outs": "all",
+            "topic": "",
+            "min": 60.0,
+            "max": 95.0,
+            "step": 5.0,
+            "module": "maya-red-dashboard"
+        },
+        {
+            "id": "d0695c72.fed309",
+            "type": "ui_slider",
+            "z": "f49e43d0.fedfc9",
+            "x": 541.028,
+            "y": 773.297,
+            "wires": [
+                [
+                    "4e0f75f2.fed708"
+                ]
+            ],
+            "group": "7fe98f5e.fed289",
+            "name": "",
+            "label": "Slider 5",
+            "tooltip": "",
+            "order": 0,
+            "width": 0,
+            "height": 0,
+            "passthru": true,
+            "outs": "all",
+            "topic": "",
+            "min": 60.0,
+            "max": 95.0,
+            "step": 5.0,
+            "module": "maya-red-dashboard"
+        },
+        {
+            "id": "4e0f75f2.fed708",
+            "type": "debug",
+            "z": "f49e43d0.fedfc9",
+            "x": 581.988,
+            "y": 100.0,
+            "wires": [],
+            "name": "",
+            "active": true,
+            "tosidebar": true,
+            "console": false,
+            "tostatus": false,
+            "complete": "false",
+            "module": "node-red",
+            "statusVal": "",
+            "statusType": "auto"
+        },
+        {
+            "id": "7fe98f5e.fed289",
+            "type": "ui_group",
+            "tab": "f1bfe9dc.fedaf5",
+            "name": "UI Group 34",
+            "order": 1,
+            "disp": true,
+            "width": "6",
+            "collapse": false,
+            "module": "maya-red-dashboard"
+        },
+        {
+            "id": "f1bfe9dc.fedaf5",
+            "type": "ui_tab",
+            "tab": "f49e43d0.fedfc9",
+            "name": "UI Tab 69",
+            "icon": "dashboard",
+            "order": 1,
+            "disabled": false,
+            "hidden": false,
+            "module": "maya-red-dashboard"
+        },
+        {
+            "id": "f49e43d0.fedfc9",
+            "type": "tab",
+            "label": "Flow 180",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "nodeTypeList": [
+        "debug",
+        "ui_group",
+        "tab",
+        "ui_slider",
+        "ui_tab"
+    ],
+    "name": "template-slider"
+}

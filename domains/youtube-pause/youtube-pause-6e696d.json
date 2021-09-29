@@ -1,0 +1,55 @@
+{
+    "title": "Flow generated from path data",
+    "text": "YouTube pause",
+    "flow": [
+        {
+            "id": "b49a1522.fed51f",
+            "type": "maya-browser-find-tab",
+            "z": "859e9805.fed025",
+            "x": 900.0,
+            "y": 647.355,
+            "wires": [
+                [
+                    "f7cf506a.fede89"
+                ]
+            ],
+            "isProfileConfigNode": false,
+            "session": "",
+            "name": "Find YouTube tab",
+            "module": "maya-red-browser-automation",
+            "payloadTypequery": "json",
+            "query": "{\"url\":\"*://*.youtube.com/*\"}"
+        },
+        {
+            "id": "f7cf506a.fede89",
+            "type": "maya-browser-execute-function",
+            "z": "859e9805.fed025",
+            "x": 100.0,
+            "y": 352.645,
+            "wires": [],
+            "payloadTypetabId": "msg",
+            "isProfileConfigNode": false,
+            "func": "pause",
+            "args": "[]",
+            "payloadTypeargs": "json",
+            "session": "",
+            "name": "Execute Pause",
+            "payloadTypefunc": "str",
+            "timeout": "2000",
+            "module": "maya-red-browser-automation",
+            "payloadTypeselector": "str",
+            "payloadTypetimeout": "num",
+            "selector": "//video",
+            "tabId": "tabs[0].id"
+        },
+        {
+            "id": "859e9805.fed025",
+            "type": "tab",
+            "label": "Flow 218",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "name": "youtube-pause"
+}

@@ -1,0 +1,204 @@
+{
+    "title": "Flow generated from path data",
+    "text": "Find and play imminent pollution on Youtube",
+    "flow": [
+        {
+            "id": "2f0a2531.fed6aa",
+            "type": "inject",
+            "z": "c0cb7565.fed52d",
+            "x": 530.661,
+            "y": 100.0,
+            "wires": [
+                [
+                    "be09f924.fed50c"
+                ]
+            ],
+            "name": "",
+            "topic": "",
+            "payload": "",
+            "payloadType": "date",
+            "repeat": "",
+            "crontab": "",
+            "once": false,
+            "onceDelay": 0.1,
+            "module": "node-red",
+            "props": [
+                {
+                    "p": "payload"
+                },
+                {
+                    "p": "topic",
+                    "vt": "str"
+                }
+            ]
+        },
+        {
+            "id": "be09f924.fed50c",
+            "type": "change",
+            "z": "c0cb7565.fed52d",
+            "x": 662.781,
+            "y": 207.541,
+            "wires": [
+                [
+                    "cdbda29e.feda14"
+                ]
+            ],
+            "name": "Set Query",
+            "rules": [
+                {
+                    "t": "set",
+                    "p": "payload.value",
+                    "pt": "msg",
+                    "to": "imminent pollution",
+                    "tot": "str"
+                }
+            ],
+            "action": "",
+            "property": "",
+            "to": "",
+            "reg": false,
+            "module": "node-red",
+            "from": ""
+        },
+        {
+            "id": "cdbda29e.feda14",
+            "type": "function",
+            "z": "c0cb7565.fed52d",
+            "x": 658.913,
+            "y": 363.755,
+            "wires": [
+                [
+                    "aab57767.feda2c"
+                ]
+            ],
+            "name": "Generate Search Query",
+            "func": "msg.tabUpdates = {\n    url: `https://youtube.com/results?search_query=${encodeURI(msg.payload.value)}`\n}\nreturn msg;",
+            "outputs": 1,
+            "noerr": 0,
+            "module": "node-red",
+            "initialize": "",
+            "finalize": ""
+        },
+        {
+            "id": "aab57767.feda2c",
+            "type": "maya-browser-find-tab",
+            "z": "c0cb7565.fed52d",
+            "x": 569.412,
+            "y": 518.878,
+            "wires": [
+                [
+                    "b59bbb33.fed57b"
+                ]
+            ],
+            "isProfileConfigNode": false,
+            "session": "",
+            "name": "Find YouTube tab",
+            "module": "maya-red-browser-automation",
+            "payloadTypequery": "json",
+            "query": "{\"url\":\"*://*.youtube.com/*\"}"
+        },
+        {
+            "id": "b59bbb33.fed57b",
+            "type": "switch",
+            "z": "c0cb7565.fed52d",
+            "x": 460.039,
+            "y": 647.382,
+            "wires": [
+                [
+                    "4173c2e6.fedc6e"
+                ],
+                [
+                    "faa93033.fed887"
+                ]
+            ],
+            "name": "",
+            "outputs": 2,
+            "rules": [
+                {
+                    "t": "gt",
+                    "v": "0",
+                    "vt": "num"
+                },
+                {
+                    "t": "lte",
+                    "v": "0",
+                    "vt": "num"
+                }
+            ],
+            "checkall": "true",
+            "repair": false,
+            "property": "tabs.length",
+            "propertyType": "msg",
+            "module": "node-red"
+        },
+        {
+            "id": "4173c2e6.fedc6e",
+            "type": "maya-browser-update-tab",
+            "z": "c0cb7565.fed52d",
+            "x": 348.737,
+            "y": 609.272,
+            "wires": [
+                [
+                    "c34cfa80.fed03a"
+                ]
+            ],
+            "payloadTypeupdates": "msg",
+            "payloadTypetabId": "msg",
+            "updates": "tabUpdates",
+            "isProfileConfigNode": false,
+            "session": "",
+            "name": "Search for query",
+            "module": "maya-red-browser-automation",
+            "timeout": "2000",
+            "payloadTypetimeout": "num",
+            "tabId": "tabs[0].id"
+        },
+        {
+            "id": "faa93033.fed887",
+            "type": "maya-browser-open",
+            "z": "c0cb7565.fed52d",
+            "x": 455.714,
+            "y": 771.747,
+            "wires": [
+                [
+                    "c34cfa80.fed03a"
+                ]
+            ],
+            "isProfileConfigNode": false,
+            "session": "",
+            "url": "tabUpdates.url",
+            "name": "Open YT and search for query",
+            "module": "maya-red-browser-automation",
+            "payloadTypeurl": "msg"
+        },
+        {
+            "id": "c34cfa80.fed03a",
+            "type": "maya-browser-click",
+            "z": "c0cb7565.fed52d",
+            "x": 313.743,
+            "y": 781.425,
+            "wires": [],
+            "payloadTypetabId": "msg",
+            "isProfileConfigNode": false,
+            "payloadTypeindex": "num",
+            "session": "",
+            "name": "Click on first result",
+            "module": "maya-red-browser-automation",
+            "timeout": "2000",
+            "index": "0",
+            "payloadTypeselector": "str",
+            "payloadTypetimeout": "num",
+            "selector": "(//a[@id='thumbnail'])[1]",
+            "tabId": "tabs[0].id"
+        },
+        {
+            "id": "c0cb7565.fed52d",
+            "type": "tab",
+            "label": "Flow 251",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "name": "youtube-play"
+}

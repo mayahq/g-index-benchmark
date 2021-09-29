@@ -1,0 +1,276 @@
+{
+    "title": "Flow generated from path data",
+    "text": "Search Google for important lode overcome gray lyre priest, scrape results and put into surplus-cocoa.csv",
+    "flow": [
+        {
+            "id": "5d9d8389.fed98f",
+            "type": "inject",
+            "z": "ffe0a272.fede7a",
+            "x": 548.279,
+            "y": 490.851,
+            "wires": [
+                [
+                    "244456e7.fed253"
+                ]
+            ],
+            "name": "",
+            "topic": "",
+            "payload": "",
+            "payloadType": "date",
+            "repeat": "",
+            "crontab": "",
+            "once": false,
+            "onceDelay": 0.1,
+            "module": "node-red",
+            "props": [
+                {
+                    "p": "payload"
+                },
+                {
+                    "p": "topic",
+                    "vt": "str"
+                }
+            ]
+        },
+        {
+            "id": "244456e7.fed253",
+            "type": "change",
+            "z": "ffe0a272.fede7a",
+            "x": 447.982,
+            "y": 458.63,
+            "wires": [
+                [
+                    "a40e345b.fed0ff"
+                ]
+            ],
+            "name": "Set Search Terms",
+            "rules": [
+                {
+                    "t": "set",
+                    "p": "payload",
+                    "pt": "msg",
+                    "to": "[\"important lode overcome gray lyre priest\"]",
+                    "tot": "json"
+                }
+            ],
+            "action": "",
+            "property": "",
+            "to": "",
+            "reg": false,
+            "module": "node-red",
+            "from": ""
+        },
+        {
+            "id": "a40e345b.fed0ff",
+            "type": "split",
+            "z": "ffe0a272.fede7a",
+            "x": 385.188,
+            "y": 381.511,
+            "wires": [
+                [
+                    "e2a38277.fed0ff"
+                ]
+            ],
+            "name": "",
+            "splt": "\\n",
+            "spltType": "str",
+            "arraySplt": 1,
+            "arraySpltType": "len",
+            "stream": false,
+            "addname": "",
+            "module": "node-red"
+        },
+        {
+            "id": "e2a38277.fed0ff",
+            "type": "function",
+            "z": "ffe0a272.fede7a",
+            "x": 415.396,
+            "y": 292.955,
+            "wires": [
+                [
+                    "071799c1.fedab9"
+                ]
+            ],
+            "name": "Set URL",
+            "func": "msg.url = \"https://google.com/search?q=\" + encodeURI(msg.payload)\nreturn msg;",
+            "outputs": 1,
+            "noerr": 0,
+            "module": "node-red",
+            "initialize": "",
+            "finalize": ""
+        },
+        {
+            "id": "071799c1.fedab9",
+            "type": "maya-browser-open",
+            "z": "ffe0a272.fede7a",
+            "x": 523.249,
+            "y": 270.168,
+            "wires": [
+                [
+                    "f98ce75b.fed27f"
+                ]
+            ],
+            "isProfileConfigNode": false,
+            "session": "",
+            "url": "url",
+            "name": "",
+            "module": "maya-red-browser-automation",
+            "payloadTypeurl": "msg"
+        },
+        {
+            "id": "f98ce75b.fed27f",
+            "type": "maya-browser-query",
+            "z": "ffe0a272.fede7a",
+            "x": 599.509,
+            "y": 338.339,
+            "wires": [
+                [
+                    "71b20f74.fed1e9"
+                ]
+            ],
+            "options": [
+                {
+                    "key": "text",
+                    "xpath": "//*[@id=\"rso\"]/div[*]/div/div/div[1]/a/h3",
+                    "extract": "/text()"
+                },
+                {
+                    "key": "link",
+                    "xpath": "//*[@id=\"rso\"]/div[*]/div/div/div[1]/a/div/cite",
+                    "extract": "/text()"
+                },
+                {
+                    "key": "desc",
+                    "xpath": "//*[@id=\"rso\"]/div[*]/div/div/div[2]/div[1]/span",
+                    "extract": "/text()"
+                }
+            ],
+            "session": "",
+            "payloadTypeTimeout": "num",
+            "payloadTypeTabId": "msg",
+            "name": "",
+            "module": "maya-red-browser-automation",
+            "timeout": 5000,
+            "mergeOutputs": true,
+            "tabId": "tabs[0].id"
+        },
+        {
+            "id": "71b20f74.fed1e9",
+            "type": "maya-browser-close-tabs",
+            "z": "ffe0a272.fede7a",
+            "x": 578.56,
+            "y": 442.792,
+            "wires": [
+                [
+                    "e48b8eb4.fedda6"
+                ]
+            ],
+            "tabIds": "tabs",
+            "action": "Close",
+            "isProfileConfigNode": false,
+            "session": "",
+            "name": "",
+            "module": "maya-red-browser-automation",
+            "timeout": "3000",
+            "payloadTypetabIds": "msg",
+            "payloadTypetimeout": "num"
+        },
+        {
+            "id": "e48b8eb4.fedda6",
+            "type": "change",
+            "z": "ffe0a272.fede7a",
+            "x": 530.23,
+            "y": 540.382,
+            "wires": [
+                [
+                    "812f6cdd.fed1ce"
+                ]
+            ],
+            "name": "",
+            "rules": [
+                {
+                    "t": "set",
+                    "p": "payload",
+                    "pt": "msg",
+                    "to": "result",
+                    "tot": "msg"
+                }
+            ],
+            "action": "",
+            "property": "",
+            "to": "",
+            "reg": false,
+            "module": "node-red",
+            "from": ""
+        },
+        {
+            "id": "812f6cdd.fed1ce",
+            "type": "csv",
+            "z": "ffe0a272.fede7a",
+            "x": 500.014,
+            "y": 620.76,
+            "wires": [
+                [
+                    "d093da43.fedf7e"
+                ]
+            ],
+            "name": "Create CSV",
+            "sep": ",",
+            "hdrin": "",
+            "hdrout": "none",
+            "multi": "one",
+            "ret": "\\n",
+            "temp": "text, link, desc",
+            "skip": "0",
+            "strings": true,
+            "module": "node-red",
+            "include_empty_strings": "",
+            "include_null_values": ""
+        },
+        {
+            "id": "d093da43.fedf7e",
+            "type": "file",
+            "z": "ffe0a272.fede7a",
+            "x": 489.95,
+            "y": 763.613,
+            "wires": [
+                [
+                    "4453eb60.fed799"
+                ]
+            ],
+            "name": "Write CSV",
+            "filename": "surplus-cocoa.csv",
+            "appendNewline": true,
+            "createDir": false,
+            "overwriteFile": "true",
+            "encoding": "none",
+            "module": "node-red"
+        },
+        {
+            "id": "4453eb60.fed799",
+            "type": "debug",
+            "z": "ffe0a272.fede7a",
+            "x": 481.644,
+            "y": 900.0,
+            "wires": [],
+            "name": "",
+            "active": true,
+            "tosidebar": true,
+            "console": false,
+            "tostatus": false,
+            "complete": "false",
+            "module": "node-red",
+            "statusVal": "",
+            "statusType": "auto"
+        },
+        {
+            "id": "ffe0a272.fede7a",
+            "type": "tab",
+            "label": "Flow 145",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "name": "googlesearch-to-csv"
+}

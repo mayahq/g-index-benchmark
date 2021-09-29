@@ -1,0 +1,82 @@
+{
+    "title": "Flow generated from path data",
+    "text": "Create a skill called 'mama obsession assess hydrocarb led treasure digit' which opens url https://town-beet-advertising-caffeine.com",
+    "flow": [
+        {
+            "id": "eb97d877.fed7b9",
+            "type": "bot-intent",
+            "z": "72896cff.fed580",
+            "x": 735.935,
+            "y": 150.747,
+            "wires": [
+                [
+                    "a0743d5d.fedd02"
+                ]
+            ],
+            "options": [
+                {
+                    "value": "mama obsession assess hydrocarb led treasure digit",
+                    "type": "prompt",
+                    "required": true
+                }
+            ],
+            "formValue": {
+                "mama obsession assess hydrocarb led treasure digit": ""
+            },
+            "endpointUrl": "/intent-eb97d877-fed7b9",
+            "name": "Skill Definition",
+            "order": 0,
+            "payload": "",
+            "module": "maya-red-bot-utils"
+        },
+        {
+            "id": "a0743d5d.fedd02",
+            "type": "change",
+            "z": "72896cff.fed580",
+            "x": 450.475,
+            "y": 449.253,
+            "wires": [
+                [
+                    "8e4d26b1.fed679"
+                ]
+            ],
+            "name": "",
+            "rules": [
+                {
+                    "t": "set",
+                    "p": "url",
+                    "pt": "msg",
+                    "to": "https://town-beet-advertising-caffeine.com",
+                    "tot": "str"
+                }
+            ],
+            "action": "",
+            "property": "",
+            "to": "",
+            "reg": false,
+            "module": "node-red",
+            "from": ""
+        },
+        {
+            "id": "8e4d26b1.fed679",
+            "type": "desktop-system-open",
+            "z": "72896cff.fed580",
+            "x": 313.59,
+            "y": 900.0,
+            "wires": [],
+            "targetType": "msg",
+            "name": "",
+            "module": "maya-red-system-utils",
+            "target": "url"
+        },
+        {
+            "id": "72896cff.fed580",
+            "type": "tab",
+            "label": "Flow 130",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "name": "url-skill"
+}

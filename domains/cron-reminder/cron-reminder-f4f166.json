@@ -1,0 +1,63 @@
+{
+    "title": "Flow generated from path data",
+    "text": "Set a reminder for 'result decryption' Every minute, between 11:00 AM and 10:59 PM, between day 6 and 10 of the month, every 1 days of the week, Friday through Saturday, every 12 months, April through December",
+    "flow": [
+        {
+            "id": "b9693d3f.fedd3f",
+            "type": "cronplus",
+            "z": "535c8d0f.fed218",
+            "x": 100.0,
+            "y": 190.525,
+            "wires": [
+                [
+                    "c98ba534.fed93b"
+                ]
+            ],
+            "name": "",
+            "outputField": "payload",
+            "timeZone": "",
+            "persistDynamic": false,
+            "outputs": 1,
+            "options": [
+                {
+                    "name": "schedule",
+                    "topic": "result decryption",
+                    "payloadType": "default",
+                    "payload": "",
+                    "expressionType": "cron",
+                    "expression": "* 11-22 6-10 4/12 5/1",
+                    "location": "",
+                    "offset": "0",
+                    "solarType": "all",
+                    "solarEvents": "sunrise,sunset"
+                }
+            ],
+            "module": "node-red-contrib-cron-plus"
+        },
+        {
+            "id": "c98ba534.fed93b",
+            "type": "desktop-system-notify",
+            "z": "535c8d0f.fed218",
+            "x": 900.0,
+            "y": 809.475,
+            "wires": [],
+            "title": "Reminder",
+            "messageType": "msg",
+            "sound": false,
+            "name": "Set Reminder",
+            "module": "maya-red-system-utils",
+            "wait": true,
+            "titleType": "str",
+            "message": "topic"
+        },
+        {
+            "id": "535c8d0f.fed218",
+            "type": "tab",
+            "label": "Flow 99",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "name": "cron-reminder"
+}

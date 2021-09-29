@@ -1,0 +1,152 @@
+{
+    "title": "Simple Form based Template Flow",
+    "text": "Enter fact, death day, increase, details of pen, glass, details of nerve, details of leg, and details of ear\n",
+    "flow": [
+        {
+            "id": "1a1aad79.fed524",
+            "type": "ui_form",
+            "z": "e91b0d01.fed437",
+            "x": 681.267,
+            "y": 100.0,
+            "wires": [
+                [
+                    "efb388fc.fede75"
+                ]
+            ],
+            "group": "00df69c5.fed8b1",
+            "name": "Form 92",
+            "label": "",
+            "order": 0,
+            "width": 0,
+            "height": 0,
+            "options": [
+                {
+                    "value": "fact",
+                    "type": "text",
+                    "label": "Fact",
+                    "required": true,
+                    "rows": null
+                },
+                {
+                    "value": "death day",
+                    "type": "date",
+                    "label": "Death day",
+                    "required": true,
+                    "rows": null
+                },
+                {
+                    "value": "increase",
+                    "type": "number",
+                    "label": "Increase",
+                    "required": true,
+                    "rows": null
+                },
+                {
+                    "value": "Details of pen",
+                    "type": "multiline",
+                    "label": "Details of pen",
+                    "required": true,
+                    "rows": null
+                },
+                {
+                    "value": "glass",
+                    "type": "text",
+                    "label": "Glass",
+                    "required": true,
+                    "rows": null
+                },
+                {
+                    "value": "Details of nerve",
+                    "type": "multiline",
+                    "label": "Details of nerve",
+                    "required": true,
+                    "rows": null
+                },
+                {
+                    "value": "Details of leg",
+                    "type": "multiline",
+                    "label": "Details of leg",
+                    "required": true,
+                    "rows": null
+                },
+                {
+                    "value": "Details of ear",
+                    "type": "multiline",
+                    "label": "Details of ear",
+                    "required": true,
+                    "rows": null
+                }
+            ],
+            "formValue": {
+                "fact": "",
+                "death day": "",
+                "increase": "",
+                "Details of pen": "",
+                "glass": "",
+                "Details of nerve": "",
+                "Details of leg": "",
+                "Details of ear": ""
+            },
+            "payload": "",
+            "submit": "Submit",
+            "cancel": "Cancel",
+            "topic": "",
+            "module": "maya-red-dashboard"
+        },
+        {
+            "id": "efb388fc.fede75",
+            "type": "debug",
+            "z": "e91b0d01.fed437",
+            "x": 318.733,
+            "y": 900.0,
+            "wires": [],
+            "name": "",
+            "active": true,
+            "tosidebar": true,
+            "console": false,
+            "tostatus": false,
+            "complete": "false",
+            "module": "node-red",
+            "statusVal": "",
+            "statusType": "auto"
+        },
+        {
+            "id": "00df69c5.fed8b1",
+            "type": "ui_group",
+            "tab": "99bdde5b.fede9d",
+            "name": "UI Group 33",
+            "order": 1,
+            "disp": true,
+            "width": "6",
+            "collapse": false,
+            "module": "maya-red-dashboard"
+        },
+        {
+            "id": "99bdde5b.fede9d",
+            "type": "ui_tab",
+            "tab": "e91b0d01.fed437",
+            "name": "UI Tab 32",
+            "icon": "dashboard",
+            "order": 1,
+            "disabled": false,
+            "hidden": false,
+            "module": "maya-red-dashboard"
+        },
+        {
+            "id": "e91b0d01.fed437",
+            "type": "tab",
+            "label": "Flow 116",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "nodeTypeList": [
+        "debug",
+        "ui_group",
+        "tab",
+        "ui_form",
+        "ui_tab"
+    ],
+    "name": "template-form"
+}

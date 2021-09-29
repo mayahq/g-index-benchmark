@@ -1,0 +1,146 @@
+{
+    "title": "Flow generated from path data",
+    "text": "Reply 'separate sell gum creepy cross-contamination' to 'gun wren blast cigarette injustice rip gaze shaky', and 'clearance construction sleep', to 'beanie screw-up ranch bough symptomatic porcelain cell chopsticks' on Facebook",
+    "flow": [
+        {
+            "id": "7c565097.fed8bf",
+            "type": "chatbot-facebook-receive",
+            "z": "35e59ab5.fed9f7",
+            "x": 439.931,
+            "y": 519.619,
+            "wires": [
+                [
+                    "62fb05e9.fed446"
+                ]
+            ],
+            "bot": "1d6eef6a.fed62a",
+            "botProduction": "1d6eef6a.fed62a",
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "62fb05e9.fed446",
+            "type": "switch",
+            "z": "35e59ab5.fed9f7",
+            "x": 511.29,
+            "y": 506.566,
+            "wires": [
+                [
+                    "cf26311f.fed096"
+                ],
+                [
+                    "9f48df50.fed007"
+                ]
+            ],
+            "name": "",
+            "outputs": 2,
+            "rules": [
+                {
+                    "t": "eq",
+                    "v": "beanie screw-up ranch bough symptomatic porcelain cell chopsticks",
+                    "vt": "str"
+                },
+                {
+                    "t": "eq",
+                    "v": "gun wren blast cigarette injustice rip gaze shaky",
+                    "vt": "str"
+                }
+            ],
+            "checkall": "false",
+            "repair": false,
+            "property": "payload.content",
+            "propertyType": "msg",
+            "module": "node-red"
+        },
+        {
+            "id": "9f48df50.fed007",
+            "type": "chatbot-message",
+            "z": "35e59ab5.fed9f7",
+            "x": 453.223,
+            "y": 186.05,
+            "wires": [
+                [
+                    "c2b6808b.fed563"
+                ]
+            ],
+            "name": "Reply 2",
+            "message": [
+                {
+                    "message": "clearance construction sleep"
+                }
+            ],
+            "language": "en",
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "cf26311f.fed096",
+            "type": "chatbot-message",
+            "z": "35e59ab5.fed9f7",
+            "x": 555.963,
+            "y": 829.684,
+            "wires": [
+                [
+                    "677b97db.fed34b"
+                ]
+            ],
+            "name": "Reply 2",
+            "message": [
+                {
+                    "message": "separate sell gum creepy cross-contamination"
+                }
+            ],
+            "language": "en",
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "677b97db.fed34b",
+            "type": "chatbot-facebook-send",
+            "z": "35e59ab5.fed9f7",
+            "x": 647.717,
+            "y": 858.081,
+            "wires": [],
+            "bot": "1d6eef6a.fed62a",
+            "botProduction": "1d6eef6a.fed62a",
+            "track": false,
+            "passThrough": false,
+            "errorOutput": false,
+            "outputs": 0,
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "c2b6808b.fed563",
+            "type": "chatbot-facebook-send",
+            "z": "35e59ab5.fed9f7",
+            "x": 391.876,
+            "y": 100.0,
+            "wires": [],
+            "bot": "1d6eef6a.fed62a",
+            "botProduction": "1d6eef6a.fed62a",
+            "track": false,
+            "passThrough": false,
+            "errorOutput": false,
+            "outputs": 0,
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "1d6eef6a.fed62a",
+            "type": "chatbot-facebook-node",
+            "botname": "",
+            "usernames": "",
+            "store": "",
+            "log": "",
+            "debug": false,
+            "multiWebHook": false,
+            "profileFields": "first_name,last_name",
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "35e59ab5.fed9f7",
+            "type": "tab",
+            "label": "Flow 163",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "name": "facebook"
+}

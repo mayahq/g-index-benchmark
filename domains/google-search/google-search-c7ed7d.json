@@ -1,0 +1,205 @@
+{
+    "title": "Flow generated from path data",
+    "text": "Search Google for unite carport wandering monitor and scrape results",
+    "flow": [
+        {
+            "id": "d768cdc9.fed58c",
+            "type": "inject",
+            "z": "fe2326e8.fedf52",
+            "x": 197.402,
+            "y": 517.76,
+            "wires": [
+                [
+                    "ba5fbb39.feda77"
+                ]
+            ],
+            "name": "",
+            "topic": "",
+            "payload": "",
+            "payloadType": "date",
+            "repeat": "",
+            "crontab": "",
+            "once": false,
+            "onceDelay": 0.1,
+            "module": "node-red",
+            "props": [
+                {
+                    "p": "payload"
+                },
+                {
+                    "p": "topic",
+                    "vt": "str"
+                }
+            ]
+        },
+        {
+            "id": "ba5fbb39.feda77",
+            "type": "change",
+            "z": "fe2326e8.fedf52",
+            "x": 306.637,
+            "y": 438.914,
+            "wires": [
+                [
+                    "655f9955.fed176"
+                ]
+            ],
+            "name": "Set Search Terms",
+            "rules": [
+                {
+                    "t": "set",
+                    "p": "payload",
+                    "pt": "msg",
+                    "to": "[\"unite carport wandering monitor\"]",
+                    "tot": "json"
+                }
+            ],
+            "action": "",
+            "property": "",
+            "to": "",
+            "reg": false,
+            "module": "node-red",
+            "from": ""
+        },
+        {
+            "id": "655f9955.fed176",
+            "type": "split",
+            "z": "fe2326e8.fedf52",
+            "x": 309.86,
+            "y": 289.501,
+            "wires": [
+                [
+                    "737aba46.fedc34"
+                ]
+            ],
+            "name": "",
+            "splt": "\\n",
+            "spltType": "str",
+            "arraySplt": 1,
+            "arraySpltType": "len",
+            "stream": false,
+            "addname": "",
+            "module": "node-red"
+        },
+        {
+            "id": "737aba46.fedc34",
+            "type": "function",
+            "z": "fe2326e8.fedf52",
+            "x": 432.61,
+            "y": 254.808,
+            "wires": [
+                [
+                    "8a0a3b18.feddd8"
+                ]
+            ],
+            "name": "Set URL",
+            "func": "msg.url = \"https://google.com/search?q=\" + encodeURI(msg.payload)\nreturn msg;",
+            "outputs": 1,
+            "noerr": 0,
+            "module": "node-red",
+            "initialize": "",
+            "finalize": ""
+        },
+        {
+            "id": "8a0a3b18.feddd8",
+            "type": "maya-browser-open",
+            "z": "fe2326e8.fedf52",
+            "x": 604.362,
+            "y": 351.47,
+            "wires": [
+                [
+                    "6252aac6.fed330"
+                ]
+            ],
+            "isProfileConfigNode": false,
+            "session": "",
+            "url": "url",
+            "name": "",
+            "module": "maya-red-browser-automation",
+            "payloadTypeurl": "msg"
+        },
+        {
+            "id": "6252aac6.fed330",
+            "type": "maya-browser-query",
+            "z": "fe2326e8.fedf52",
+            "x": 663.908,
+            "y": 543.372,
+            "wires": [
+                [
+                    "2082a6d8.fed1f3"
+                ]
+            ],
+            "options": [
+                {
+                    "key": "text",
+                    "xpath": "//*[@id=\"rso\"]/div[*]/div/div/div[1]/a/h3",
+                    "extract": "/text()"
+                },
+                {
+                    "key": "link",
+                    "xpath": "//*[@id=\"rso\"]/div[*]/div/div/div[1]/a/div/cite",
+                    "extract": "/text()"
+                },
+                {
+                    "key": "desc",
+                    "xpath": "//*[@id=\"rso\"]/div[*]/div/div/div[2]/div[1]/span",
+                    "extract": "/text()"
+                }
+            ],
+            "session": "",
+            "payloadTypeTimeout": "num",
+            "payloadTypeTabId": "msg",
+            "name": "",
+            "module": "maya-red-browser-automation",
+            "timeout": 5000,
+            "mergeOutputs": true,
+            "tabId": "tabs[0].id"
+        },
+        {
+            "id": "2082a6d8.fed1f3",
+            "type": "maya-browser-close-tabs",
+            "z": "fe2326e8.fedf52",
+            "x": 681.074,
+            "y": 704.175,
+            "wires": [
+                [
+                    "3844f240.fed285"
+                ]
+            ],
+            "tabIds": "tabs",
+            "action": "Close",
+            "isProfileConfigNode": false,
+            "session": "",
+            "name": "",
+            "module": "maya-red-browser-automation",
+            "timeout": "3000",
+            "payloadTypetabIds": "msg",
+            "payloadTypetimeout": "num"
+        },
+        {
+            "id": "3844f240.fed285",
+            "type": "debug",
+            "z": "fe2326e8.fedf52",
+            "x": 804.148,
+            "y": 900.0,
+            "wires": [],
+            "name": "",
+            "active": true,
+            "tosidebar": true,
+            "console": false,
+            "tostatus": false,
+            "complete": "true",
+            "module": "node-red",
+            "statusVal": "",
+            "statusType": "auto"
+        },
+        {
+            "id": "fe2326e8.fedf52",
+            "type": "tab",
+            "label": "Flow 188",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "name": "google-search"
+}

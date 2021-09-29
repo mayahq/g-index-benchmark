@@ -1,0 +1,205 @@
+{
+    "title": "Flow generated from path data",
+    "text": "Search Google for pagan carriage rocker and scrape results",
+    "flow": [
+        {
+            "id": "5bd8d3e8.fed595",
+            "type": "inject",
+            "z": "4f42cead.fed13b",
+            "x": 699.706,
+            "y": 526.7,
+            "wires": [
+                [
+                    "19c0c450.fedd65"
+                ]
+            ],
+            "name": "",
+            "topic": "",
+            "payload": "",
+            "payloadType": "date",
+            "repeat": "",
+            "crontab": "",
+            "once": false,
+            "onceDelay": 0.1,
+            "module": "node-red",
+            "props": [
+                {
+                    "p": "payload"
+                },
+                {
+                    "p": "topic",
+                    "vt": "str"
+                }
+            ]
+        },
+        {
+            "id": "19c0c450.fedd65",
+            "type": "change",
+            "z": "4f42cead.fed13b",
+            "x": 766.176,
+            "y": 391.924,
+            "wires": [
+                [
+                    "a06adc13.fed19e"
+                ]
+            ],
+            "name": "Set Search Terms",
+            "rules": [
+                {
+                    "t": "set",
+                    "p": "payload",
+                    "pt": "msg",
+                    "to": "[\"pagan carriage rocker\"]",
+                    "tot": "json"
+                }
+            ],
+            "action": "",
+            "property": "",
+            "to": "",
+            "reg": false,
+            "module": "node-red",
+            "from": ""
+        },
+        {
+            "id": "a06adc13.fed19e",
+            "type": "split",
+            "z": "4f42cead.fed13b",
+            "x": 684.039,
+            "y": 259.246,
+            "wires": [
+                [
+                    "12f8976f.fed20f"
+                ]
+            ],
+            "name": "",
+            "splt": "\\n",
+            "spltType": "str",
+            "arraySplt": 1,
+            "arraySpltType": "len",
+            "stream": false,
+            "addname": "",
+            "module": "node-red"
+        },
+        {
+            "id": "12f8976f.fed20f",
+            "type": "function",
+            "z": "4f42cead.fed13b",
+            "x": 543.944,
+            "y": 328.774,
+            "wires": [
+                [
+                    "1aaf5575.fed31a"
+                ]
+            ],
+            "name": "Set URL",
+            "func": "msg.url = \"https://google.com/search?q=\" + encodeURI(msg.payload)\nreturn msg;",
+            "outputs": 1,
+            "noerr": 0,
+            "module": "node-red",
+            "initialize": "",
+            "finalize": ""
+        },
+        {
+            "id": "1aaf5575.fed31a",
+            "type": "maya-browser-open",
+            "z": "4f42cead.fed13b",
+            "x": 457.463,
+            "y": 472.272,
+            "wires": [
+                [
+                    "792c0904.fed212"
+                ]
+            ],
+            "isProfileConfigNode": false,
+            "session": "",
+            "url": "url",
+            "name": "",
+            "module": "maya-red-browser-automation",
+            "payloadTypeurl": "msg"
+        },
+        {
+            "id": "792c0904.fed212",
+            "type": "maya-browser-query",
+            "z": "4f42cead.fed13b",
+            "x": 446.237,
+            "y": 581.48,
+            "wires": [
+                [
+                    "f988ef0c.fed594"
+                ]
+            ],
+            "options": [
+                {
+                    "key": "text",
+                    "xpath": "//*[@id=\"rso\"]/div[*]/div/div/div[1]/a/h3",
+                    "extract": "/text()"
+                },
+                {
+                    "key": "link",
+                    "xpath": "//*[@id=\"rso\"]/div[*]/div/div/div[1]/a/div/cite",
+                    "extract": "/text()"
+                },
+                {
+                    "key": "desc",
+                    "xpath": "//*[@id=\"rso\"]/div[*]/div/div/div[2]/div[1]/span",
+                    "extract": "/text()"
+                }
+            ],
+            "session": "",
+            "payloadTypeTimeout": "num",
+            "payloadTypeTabId": "msg",
+            "name": "",
+            "module": "maya-red-browser-automation",
+            "timeout": 5000,
+            "mergeOutputs": true,
+            "tabId": "tabs[0].id"
+        },
+        {
+            "id": "f988ef0c.fed594",
+            "type": "maya-browser-close-tabs",
+            "z": "4f42cead.fed13b",
+            "x": 302.435,
+            "y": 668.256,
+            "wires": [
+                [
+                    "cbde6264.fed39f"
+                ]
+            ],
+            "tabIds": "tabs",
+            "action": "Close",
+            "isProfileConfigNode": false,
+            "session": "",
+            "name": "",
+            "module": "maya-red-browser-automation",
+            "timeout": "3000",
+            "payloadTypetabIds": "msg",
+            "payloadTypetimeout": "num"
+        },
+        {
+            "id": "cbde6264.fed39f",
+            "type": "debug",
+            "z": "4f42cead.fed13b",
+            "x": 100.0,
+            "y": 771.348,
+            "wires": [],
+            "name": "",
+            "active": true,
+            "tosidebar": true,
+            "console": false,
+            "tostatus": false,
+            "complete": "true",
+            "module": "node-red",
+            "statusVal": "",
+            "statusType": "auto"
+        },
+        {
+            "id": "4f42cead.fed13b",
+            "type": "tab",
+            "label": "Flow 79",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "name": "google-search"
+}

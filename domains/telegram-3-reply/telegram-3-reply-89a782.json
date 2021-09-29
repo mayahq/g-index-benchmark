@@ -1,0 +1,191 @@
+{
+    "title": "Flow generated from path data",
+    "text": "On Telegram, when user says 'parsley late promenade steal', reply with 'yellowjacket earthy curriculum misnomer forbid military denim stair', when user says 'makeover pansy eel ring racer shot decline', reply with 'helpless paramedic misunderstand appreciation', and when user says 'papaya shawl' reply with 'conversion manager humdrum text renaissance hacienda hurdler creator optimist'",
+    "flow": [
+        {
+            "id": "a099b0bd.fed07a",
+            "type": "chatbot-telegram-receive",
+            "z": "d49f8ce8.fed3a8",
+            "x": 575.634,
+            "y": 444.039,
+            "wires": [
+                [
+                    "528c8e11.fed7f3"
+                ]
+            ],
+            "bot": "6f1c2fe3.fedc64",
+            "botProduction": "6f1c2fe3.fedc64",
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "528c8e11.fed7f3",
+            "type": "switch",
+            "z": "d49f8ce8.fed3a8",
+            "x": 524.974,
+            "y": 485.26,
+            "wires": [
+                [
+                    "0cd8d73a.fed80a"
+                ],
+                [
+                    "49fbf751.fedfbd"
+                ],
+                [
+                    "bb1f5856.fed450"
+                ]
+            ],
+            "name": "",
+            "outputs": 3,
+            "rules": [
+                {
+                    "t": "eq",
+                    "v": "makeover pansy eel ring racer shot decline",
+                    "vt": "str"
+                },
+                {
+                    "t": "eq",
+                    "v": "papaya shawl",
+                    "vt": "str"
+                },
+                {
+                    "t": "eq",
+                    "v": "parsley late promenade steal",
+                    "vt": "str"
+                }
+            ],
+            "checkall": "false",
+            "repair": false,
+            "property": "payload.content",
+            "propertyType": "msg",
+            "module": "node-red"
+        },
+        {
+            "id": "bb1f5856.fed450",
+            "type": "chatbot-message",
+            "z": "d49f8ce8.fed3a8",
+            "x": 816.11,
+            "y": 259.933,
+            "wires": [
+                [
+                    "b9f0ea5b.fed884"
+                ]
+            ],
+            "name": "Reply 2",
+            "message": [
+                {
+                    "message": "conversion manager humdrum text renaissance hacienda hurdler creator optimist"
+                }
+            ],
+            "language": "en",
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "49fbf751.fedfbd",
+            "type": "chatbot-message",
+            "z": "d49f8ce8.fed3a8",
+            "x": 233.572,
+            "y": 459.296,
+            "wires": [
+                [
+                    "513b7ffb.fed0eb"
+                ]
+            ],
+            "name": "Reply 2",
+            "message": [
+                {
+                    "message": "helpless paramedic misunderstand appreciation"
+                }
+            ],
+            "language": "en",
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "0cd8d73a.fed80a",
+            "type": "chatbot-message",
+            "z": "d49f8ce8.fed3a8",
+            "x": 457.392,
+            "y": 780.128,
+            "wires": [
+                [
+                    "1cb0013a.fed7f7"
+                ]
+            ],
+            "name": "Reply 2",
+            "message": [
+                {
+                    "message": "yellowjacket earthy curriculum misnomer forbid military denim stair"
+                }
+            ],
+            "language": "en",
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "1cb0013a.fed7f7",
+            "type": "chatbot-telegram-send",
+            "z": "d49f8ce8.fed3a8",
+            "x": 448.017,
+            "y": 900.0,
+            "wires": [],
+            "bot": "6f1c2fe3.fedc64",
+            "botProduction": "6f1c2fe3.fedc64",
+            "track": false,
+            "passThrough": false,
+            "errorOutput": false,
+            "outputs": 0,
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "b9f0ea5b.fed884",
+            "type": "chatbot-telegram-send",
+            "z": "d49f8ce8.fed3a8",
+            "x": 816.586,
+            "y": 172.849,
+            "wires": [],
+            "bot": "6f1c2fe3.fedc64",
+            "botProduction": "6f1c2fe3.fedc64",
+            "track": false,
+            "passThrough": false,
+            "errorOutput": false,
+            "outputs": 0,
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "513b7ffb.fed0eb",
+            "type": "chatbot-telegram-send",
+            "z": "d49f8ce8.fed3a8",
+            "x": 127.715,
+            "y": 498.495,
+            "wires": [],
+            "bot": "6f1c2fe3.fedc64",
+            "botProduction": "6f1c2fe3.fedc64",
+            "track": false,
+            "passThrough": false,
+            "errorOutput": false,
+            "outputs": 0,
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "6f1c2fe3.fedc64",
+            "type": "chatbot-telegram-node",
+            "botname": "",
+            "usernames": "",
+            "providerToken": "",
+            "polling": "1000",
+            "store": "",
+            "log": "",
+            "debug": true,
+            "webHook": "",
+            "connectMode": "polling",
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "d49f8ce8.fed3a8",
+            "type": "tab",
+            "label": "Flow 207",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "name": "telegram-3-reply"
+}

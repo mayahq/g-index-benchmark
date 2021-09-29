@@ -1,0 +1,55 @@
+{
+    "title": "Flow generated from path data",
+    "text": "Youtube Resume",
+    "flow": [
+        {
+            "id": "4cacfca5.fedb6b",
+            "type": "maya-browser-find-tab",
+            "z": "bd48c9ad.fed3bb",
+            "x": 766.134,
+            "y": 100.0,
+            "wires": [
+                [
+                    "2b576da5.fedeec"
+                ]
+            ],
+            "isProfileConfigNode": false,
+            "session": "",
+            "name": "Find YouTube tab",
+            "module": "maya-red-browser-automation",
+            "payloadTypequery": "json",
+            "query": "{\"url\":\"*://*.youtube.com/*\"}"
+        },
+        {
+            "id": "2b576da5.fedeec",
+            "type": "maya-browser-execute-function",
+            "z": "bd48c9ad.fed3bb",
+            "x": 233.866,
+            "y": 900.0,
+            "wires": [],
+            "payloadTypetabId": "msg",
+            "isProfileConfigNode": false,
+            "func": "play",
+            "args": "[]",
+            "payloadTypeargs": "json",
+            "session": "",
+            "name": "Execute Play",
+            "payloadTypefunc": "str",
+            "timeout": "2000",
+            "module": "maya-red-browser-automation",
+            "payloadTypeselector": "str",
+            "payloadTypetimeout": "num",
+            "selector": "//video",
+            "tabId": "tabs[0].id"
+        },
+        {
+            "id": "bd48c9ad.fed3bb",
+            "type": "tab",
+            "label": "Flow 91",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "name": "youtube-resume"
+}

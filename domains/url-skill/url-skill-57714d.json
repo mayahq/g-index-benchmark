@@ -1,0 +1,82 @@
+{
+    "title": "Flow generated from path data",
+    "text": "Create a skill called 'eminent stot combat' which opens url https://espadrille-mute.com",
+    "flow": [
+        {
+            "id": "e07c7e78.fed828",
+            "type": "bot-intent",
+            "z": "d27005c2.fedfe1",
+            "x": 289.985,
+            "y": 160.994,
+            "wires": [
+                [
+                    "9c887df0.fed845"
+                ]
+            ],
+            "options": [
+                {
+                    "value": "eminent stot combat",
+                    "type": "prompt",
+                    "required": true
+                }
+            ],
+            "formValue": {
+                "eminent stot combat": ""
+            },
+            "endpointUrl": "/intent-e07c7e78-fed828",
+            "name": "Skill Definition",
+            "order": 0,
+            "payload": "",
+            "module": "maya-red-bot-utils"
+        },
+        {
+            "id": "9c887df0.fed845",
+            "type": "change",
+            "z": "d27005c2.fedfe1",
+            "x": 598.156,
+            "y": 439.006,
+            "wires": [
+                [
+                    "a61d1bf5.fedde5"
+                ]
+            ],
+            "name": "",
+            "rules": [
+                {
+                    "t": "set",
+                    "p": "url",
+                    "pt": "msg",
+                    "to": "https://espadrille-mute.com",
+                    "tot": "str"
+                }
+            ],
+            "action": "",
+            "property": "",
+            "to": "",
+            "reg": false,
+            "module": "node-red",
+            "from": ""
+        },
+        {
+            "id": "a61d1bf5.fedde5",
+            "type": "desktop-system-open",
+            "z": "d27005c2.fedfe1",
+            "x": 611.858,
+            "y": 900.0,
+            "wires": [],
+            "targetType": "msg",
+            "name": "",
+            "module": "maya-red-system-utils",
+            "target": "url"
+        },
+        {
+            "id": "d27005c2.fedfe1",
+            "type": "tab",
+            "label": "Flow 149",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "name": "url-skill"
+}

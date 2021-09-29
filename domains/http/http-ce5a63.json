@@ -1,0 +1,63 @@
+{
+    "title": "Flow generated from path data",
+    "text": "Create a HTTP HEAD endpoint called carpeting-ambulance-hallway-tortellini-walrus",
+    "flow": [
+        {
+            "id": "3bd32204.feda77",
+            "type": "http in",
+            "z": "905d3901.fedc11",
+            "x": 500.0,
+            "y": 500.0,
+            "wires": [
+                [
+                    "ad72ee8e.fed723",
+                    "39b0817c.fed6e4"
+                ]
+            ],
+            "name": "",
+            "url": "localhost:3000/carpeting-ambulance-hallway-tortellini-walrus",
+            "method": "HEAD",
+            "upload": false,
+            "swaggerDoc": "",
+            "module": "node-red"
+        },
+        {
+            "id": "ad72ee8e.fed723",
+            "type": "http response",
+            "z": "905d3901.fedc11",
+            "x": 100.0,
+            "y": 582.683,
+            "wires": [],
+            "name": "",
+            "statusCode": "",
+            "headers": {},
+            "module": "node-red"
+        },
+        {
+            "id": "39b0817c.fed6e4",
+            "type": "debug",
+            "z": "905d3901.fedc11",
+            "x": 900.0,
+            "y": 417.317,
+            "wires": [],
+            "name": "",
+            "active": true,
+            "tosidebar": true,
+            "console": false,
+            "tostatus": false,
+            "complete": "false",
+            "module": "node-red",
+            "statusVal": "",
+            "statusType": "auto"
+        },
+        {
+            "id": "905d3901.fedc11",
+            "type": "tab",
+            "label": "Flow 139",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "name": "http"
+}

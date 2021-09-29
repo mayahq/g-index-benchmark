@@ -1,0 +1,148 @@
+{
+    "title": "Flow generated from path data",
+    "text": "On Telegram, when user says 'rural rug', reply with 'typeface', and when user says 'trousers tramp personality doing nebulous demonic circumstance cyclamen', reply with 'screen sarong'",
+    "flow": [
+        {
+            "id": "0e4f470d.fed3d7",
+            "type": "chatbot-telegram-receive",
+            "z": "4395fd42.fedafa",
+            "x": 432.39,
+            "y": 273.155,
+            "wires": [
+                [
+                    "2c197428.fed1ee"
+                ]
+            ],
+            "bot": "e0170775.fedd4c",
+            "botProduction": "e0170775.fedd4c",
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "2c197428.fed1ee",
+            "type": "switch",
+            "z": "4395fd42.fedafa",
+            "x": 510.772,
+            "y": 451.842,
+            "wires": [
+                [
+                    "4c076b80.fed1c0"
+                ],
+                [
+                    "4633a239.fed56f"
+                ]
+            ],
+            "name": "",
+            "outputs": 2,
+            "rules": [
+                {
+                    "t": "eq",
+                    "v": "rural rug",
+                    "vt": "str"
+                },
+                {
+                    "t": "eq",
+                    "v": "trousers tramp personality doing nebulous demonic circumstance cyclamen",
+                    "vt": "str"
+                }
+            ],
+            "checkall": "false",
+            "repair": false,
+            "property": "payload.content",
+            "propertyType": "msg",
+            "module": "node-red"
+        },
+        {
+            "id": "4633a239.fed56f",
+            "type": "chatbot-message",
+            "z": "4395fd42.fedafa",
+            "x": 799.505,
+            "y": 308.747,
+            "wires": [
+                [
+                    "90a92c16.fed96d"
+                ]
+            ],
+            "name": "Reply 2",
+            "message": [
+                {
+                    "message": "screen sarong"
+                }
+            ],
+            "language": "en",
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "4c076b80.fed1c0",
+            "type": "chatbot-message",
+            "z": "4395fd42.fedafa",
+            "x": 229.898,
+            "y": 613.81,
+            "wires": [
+                [
+                    "9cef0cf6.fed03c"
+                ]
+            ],
+            "name": "Reply 2",
+            "message": [
+                {
+                    "message": "typeface"
+                }
+            ],
+            "language": "en",
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "9cef0cf6.fed03c",
+            "type": "chatbot-telegram-send",
+            "z": "4395fd42.fedafa",
+            "x": 127.434,
+            "y": 856.849,
+            "wires": [],
+            "bot": "e0170775.fedd4c",
+            "botProduction": "e0170775.fedd4c",
+            "track": false,
+            "passThrough": false,
+            "errorOutput": false,
+            "outputs": 0,
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "90a92c16.fed96d",
+            "type": "chatbot-telegram-send",
+            "z": "4395fd42.fedafa",
+            "x": 900.0,
+            "y": 495.597,
+            "wires": [],
+            "bot": "e0170775.fedd4c",
+            "botProduction": "e0170775.fedd4c",
+            "track": false,
+            "passThrough": false,
+            "errorOutput": false,
+            "outputs": 0,
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "e0170775.fedd4c",
+            "type": "chatbot-telegram-node",
+            "botname": "",
+            "usernames": "",
+            "providerToken": "",
+            "polling": "1000",
+            "store": "",
+            "log": "",
+            "debug": true,
+            "webHook": "",
+            "connectMode": "polling",
+            "module": "node-red-contrib-chatbot"
+        },
+        {
+            "id": "4395fd42.fedafa",
+            "type": "tab",
+            "label": "Flow 9",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "name": "telegram-2-reply"
+}

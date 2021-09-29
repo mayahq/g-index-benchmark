@@ -1,0 +1,204 @@
+{
+    "title": "Flow generated from path data",
+    "text": "Find and play lush gong signal lag follow wetsuit briefly tacit contain on Youtube",
+    "flow": [
+        {
+            "id": "65be7915.fedfa1",
+            "type": "inject",
+            "z": "06df2550.fede52",
+            "x": 351.88,
+            "y": 900.0,
+            "wires": [
+                [
+                    "abd22391.fed116"
+                ]
+            ],
+            "name": "",
+            "topic": "",
+            "payload": "",
+            "payloadType": "date",
+            "repeat": "",
+            "crontab": "",
+            "once": false,
+            "onceDelay": 0.1,
+            "module": "node-red",
+            "props": [
+                {
+                    "p": "payload"
+                },
+                {
+                    "p": "topic",
+                    "vt": "str"
+                }
+            ]
+        },
+        {
+            "id": "abd22391.fed116",
+            "type": "change",
+            "z": "06df2550.fede52",
+            "x": 369.371,
+            "y": 783.007,
+            "wires": [
+                [
+                    "f7db87b0.fed311"
+                ]
+            ],
+            "name": "Set Query",
+            "rules": [
+                {
+                    "t": "set",
+                    "p": "payload.value",
+                    "pt": "msg",
+                    "to": "lush gong signal lag follow wetsuit briefly tacit contain",
+                    "tot": "str"
+                }
+            ],
+            "action": "",
+            "property": "",
+            "to": "",
+            "reg": false,
+            "module": "node-red",
+            "from": ""
+        },
+        {
+            "id": "f7db87b0.fed311",
+            "type": "function",
+            "z": "06df2550.fede52",
+            "x": 375.691,
+            "y": 643.461,
+            "wires": [
+                [
+                    "a7d82aa9.fed42e"
+                ]
+            ],
+            "name": "Generate Search Query",
+            "func": "msg.tabUpdates = {\n    url: `https://youtube.com/results?search_query=${encodeURI(msg.payload.value)}`\n}\nreturn msg;",
+            "outputs": 1,
+            "noerr": 0,
+            "module": "node-red",
+            "initialize": "",
+            "finalize": ""
+        },
+        {
+            "id": "a7d82aa9.fed42e",
+            "type": "maya-browser-find-tab",
+            "z": "06df2550.fede52",
+            "x": 452.113,
+            "y": 542.49,
+            "wires": [
+                [
+                    "6423f527.fed0ab"
+                ]
+            ],
+            "isProfileConfigNode": false,
+            "session": "",
+            "name": "Find YouTube tab",
+            "module": "maya-red-browser-automation",
+            "payloadTypequery": "json",
+            "query": "{\"url\":\"*://*.youtube.com/*\"}"
+        },
+        {
+            "id": "6423f527.fed0ab",
+            "type": "switch",
+            "z": "06df2550.fede52",
+            "x": 553.22,
+            "y": 400.915,
+            "wires": [
+                [
+                    "1aef7a86.fed42c"
+                ],
+                [
+                    "620c5672.fed4f2"
+                ]
+            ],
+            "name": "",
+            "outputs": 2,
+            "rules": [
+                {
+                    "t": "gt",
+                    "v": "0",
+                    "vt": "num"
+                },
+                {
+                    "t": "lte",
+                    "v": "0",
+                    "vt": "num"
+                }
+            ],
+            "checkall": "true",
+            "repair": false,
+            "property": "tabs.length",
+            "propertyType": "msg",
+            "module": "node-red"
+        },
+        {
+            "id": "1aef7a86.fed42c",
+            "type": "maya-browser-update-tab",
+            "z": "06df2550.fede52",
+            "x": 549.169,
+            "y": 309.55,
+            "wires": [
+                [
+                    "d10feda7.fed65c"
+                ]
+            ],
+            "payloadTypeupdates": "msg",
+            "payloadTypetabId": "msg",
+            "updates": "tabUpdates",
+            "isProfileConfigNode": false,
+            "session": "",
+            "name": "Search for query",
+            "module": "maya-red-browser-automation",
+            "timeout": "2000",
+            "payloadTypetimeout": "num",
+            "tabId": "tabs[0].id"
+        },
+        {
+            "id": "620c5672.fed4f2",
+            "type": "maya-browser-open",
+            "z": "06df2550.fede52",
+            "x": 641.116,
+            "y": 294.608,
+            "wires": [
+                [
+                    "d10feda7.fed65c"
+                ]
+            ],
+            "isProfileConfigNode": false,
+            "session": "",
+            "url": "tabUpdates.url",
+            "name": "Open YT and search for query",
+            "module": "maya-red-browser-automation",
+            "payloadTypeurl": "msg"
+        },
+        {
+            "id": "d10feda7.fed65c",
+            "type": "maya-browser-click",
+            "z": "06df2550.fede52",
+            "x": 707.438,
+            "y": 125.97,
+            "wires": [],
+            "payloadTypetabId": "msg",
+            "isProfileConfigNode": false,
+            "payloadTypeindex": "num",
+            "session": "",
+            "name": "Click on first result",
+            "module": "maya-red-browser-automation",
+            "timeout": "2000",
+            "index": "0",
+            "payloadTypeselector": "str",
+            "payloadTypetimeout": "num",
+            "selector": "(//a[@id='thumbnail'])[1]",
+            "tabId": "tabs[0].id"
+        },
+        {
+            "id": "06df2550.fede52",
+            "type": "tab",
+            "label": "Flow 191",
+            "disabled": false,
+            "info": "",
+            "module": "node-red"
+        }
+    ],
+    "name": "youtube-play"
+}
